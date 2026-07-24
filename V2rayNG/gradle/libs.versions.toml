@@ -1,4 +1,5 @@
 [versions]
+quickie = "1.11.0"
 blacksquircleEditorkit = "2.9.0"
 multidex = "2.0.1"
 preference = "1.2.1"
@@ -24,6 +25,7 @@ camerax = "1.6.1"
 composeBom = "2026.06.01"
 reorderable = "3.1.0"
 [libraries]
+quickie-bundled = { group = "io.github.g00fy2.quickie", name = "quickie-bundled", version.ref = "quickie" }
 blacksquircle-editorkit = { group = "com.blacksquircle.ui", name = "editorkit", version.ref = "blacksquircleEditorkit" }
 blacksquircle-language-json = { group = "com.blacksquircle.ui", name = "language-json", version.ref = "blacksquircleEditorkit" }
 androidx-multidex = { group = "androidx.multidex", name = "multidex", version.ref = "multidex" }
