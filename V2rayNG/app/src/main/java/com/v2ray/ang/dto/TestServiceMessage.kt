@@ -8,3 +8,4 @@ data class TestServiceMessage(
     val serverGuids: List<String> = emptyList()
 ) : Serializable
 
+

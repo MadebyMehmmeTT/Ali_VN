@@ -11,3 +11,4 @@ data class CertSha256Result(
     val sha256: String = "",
     val error: String = "",
 )
+

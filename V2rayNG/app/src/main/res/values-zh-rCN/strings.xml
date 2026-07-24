@@ -10,7 +10,7 @@
     <string name="migration_fail">数据迁移失败啦!</string>
     <string name="pull_down_to_refresh">请下拉刷新!</string>
 
-    <!-- Notifications -->
+    
     <string name="notification_action_stop_v2ray">停止</string>
     <string name="toast_permission_denied">无法取得权限</string>
     <string name="toast_permission_denied_notification">无法取得通知权限</string>
@@ -20,7 +20,7 @@
     <string name="toast_services_success">启动服务成功</string>
     <string name="toast_services_failure">启动服务失败</string>
 
-    <!--ServerActivity-->
+    
     <string name="title_server">配置项</string>
     <string name="menu_item_add_config">添加配置</string>
     <string name="menu_item_save_config">保存配置</string>
@@ -126,7 +126,7 @@
     <string name="toast_fetch_cert_sha256_success">获取指纹证书完成</string>
     <string name="toast_fetch_cert_sha256_failed">获取证书指纹失败</string>
 
-    <!-- UserAssetActivity -->
+    
     <string name="toast_asset_copy_failed">失败, 请使用文件管理器</string>
     <string name="menu_item_add_file">添加文件</string>
     <string name="menu_item_scan_qrcode">扫描 QRcode</string>
@@ -137,7 +137,7 @@
     <string name="msg_remark_is_duplicate">备注已经存在</string>
     <string name="asset_geo_files_sources">Geo 文件来源 (可选)</string>
 
-    <!-- PerAppProxyActivity -->
+    
     <string name="msg_dialog_progress">正在加载</string>
     <string name="menu_item_search">搜索</string>
     <string name="menu_item_select_all">全选</string>
@@ -151,7 +151,7 @@
     <string name="per_app_proxy_settings">分应用设置</string>
     <string name="per_app_proxy_settings_enable">启用分应用</string>
 
-    <!-- Preferences -->
+    
     <string name="title_settings">设置</string>
     <string name="title_advanced">进阶设置</string>
     <string name="title_core_settings">核心设置</string>
@@ -161,9 +161,6 @@
     <string name="title_pref_is_booted">开机时自动连接</string>
     <string name="summary_pref_is_booted">开机时自动连接选择的服务器，可能会不成功</string>
 
-    <string name="subscription_updater_job_tips">任务将在后台运行，在通知中会显示进度信息</string>
-    <string name="title_pref_auto_test_after_update_subscription">更新订阅后自动测试</string>
-    <string name="summary_pref_auto_test_after_update_subscription">自动测试需要比较长的时间，请耐心等待</string>
     <string name="title_pref_auto_remove_invalid_after_test">测试后自动删除无效配置</string>
     <string name="summary_pref_auto_remove_invalid_after_test">测试结果可能不准确且已删除的配置无法恢复</string>
     <string name="title_pref_auto_sort_after_test">测试后自动排序</string>
@@ -246,17 +243,19 @@
     <string name="title_pref_confirm_remove">删除配置确认</string>
     <string name="summary_pref_confirm_remove">删除配置是否需要用户二次确认</string>
 
+    <string name="title_pref_start_scan_immediate">立即启动扫码</string>
+    <string name="summary_pref_start_scan_immediate">启动时立即打开相机扫描，否则可在工具栏选择扫码或选照片</string>
 
     <string name="title_pref_append_http_proxy">追加 HTTP 代理至 VPN</string>
     <string name="summary_pref_append_http_proxy">浏览器 / 一些支持的应用 将直接使用 HTTP 代理, 而不经过虚拟网卡设备 (Android 10+)</string>
 
     <string name="title_pref_double_column_display">启用双列显示</string>
-    <string name="summary_pref_double_column_display">配置列表以双列显示，允许在屏幕上显示更多内容。</string>
+    <string name="summary_pref_double_column_display">配置列表以双列显示，允许在屏幕上显示更多内容。需要重启应用生效。</string>
 
     <string name="title_pref_group_all_display">启用显示所有组</string>
     <string name="summary_pref_group_all_display">添加一个额外的“所有选项卡”页面</string>
 
-    <!-- AboutActivity -->
+    
     <string name="title_pref_feedback">反馈</string>
     <string name="summary_pref_feedback">反馈改进或漏洞至 GitHub</string>
     <string name="summary_pref_tg_group">加入 Telegram Group</string>
@@ -292,7 +291,6 @@
     <string name="title_root_lan_sharing">局域网 / 热点网络共享 (仅限 Root 用户)</string>
     <string name="summary_root_lan_sharing">允许通过 Wi-Fi 热点和 USB 共享网络连接的设备走 VPN 代理流量</string>
 
-
     <string name="title_logcat">Logcat</string>
     <string name="logcat_copy">复制</string>
     <string name="logcat_clear">清除</string>
@@ -306,7 +304,6 @@
     <string name="sub_setting_remarks">备注</string>
     <string name="sub_setting_url">可选地址 (url)</string>
     <string name="sub_setting_user_agent">User Agent</string>
-    <string name="sub_setting_request_headers">请求头（JSON 格式）</string>
     <string name="sub_setting_filter">别名正则过滤</string>
     <string name="sub_setting_enable">启用更新</string>
     <string name="sub_auto_update">启用自动更新</string>
@@ -322,7 +319,6 @@
     <string name="title_filter_config">过滤配置</string>
     <string name="filter_config_all">所有</string>
     <string name="title_del_duplicate_config_count">删除 %d 个重复配置</string>
-    <string name="summary_scan_qrcode">点击屏幕打开相机扫描</string>
 
     <string name="title_del_config_count">删除 %d 个配置</string>
     <string name="title_import_config_count">导入 %d 个配置</string>
@@ -337,7 +333,7 @@
     <string name="tasker_start_service">启动服务</string>
     <string name="tasker_setting_confirm">确定</string>
 
-    <!-- RoutingSettingActivity -->
+    
     <string name="routing_settings_domain_strategy">域名策略</string>
     <string name="routing_settings_title">路由设置</string>
     <string name="routing_settings_tips">用逗号（,）分隔，选择填写 domain、ip 或 process 中的一项</string>
@@ -354,7 +350,6 @@
     <string name="routing_settings_domain">domain</string>
     <string name="routing_settings_ip">ip</string>
     <string name="routing_settings_process">process (包名 — 仅在使用 Xray 的 TUN、开启 routeOnly 且 Android 10+ 时可用)</string>
-    <string name="routing_settings_process_select">选择包名</string>
     <string name="routing_settings_port">port</string>
     <string name="routing_settings_protocol">protocol</string>
     <string name="routing_settings_protocol_tip">[http,tls,bittorrent]</string>
@@ -383,14 +378,6 @@
     <string name="title_pref_fragment_interval">分片间隔（最小 - 最大）</string>
     <string name="title_pref_fragment_enabled">启用分片（Fragment）</string>
     <string name="title_pref_fragment_maxsplit">分片最大分割数</string>
-    <string name="title_observatory_settings">连接观测设置</string>
-    <string name="title_pref_observatory_least_ping_interval">leastPing 探测间隔</string>
-    <string name="title_pref_observatory_least_load_interval">leastLoad 探测间隔</string>
-    <string name="title_pref_observatory_least_load_method">leastLoad HTTP 方法</string>
-    <string name="title_pref_observatory_least_load_sampling">leastLoad 采样数量</string>
-    <string name="title_pref_observatory_least_load_timeout">leastLoad 探测超时</string>
-    <string name="toast_invalid_observatory_duration">时间格式无效。请使用类似 3m 或 30s 的值。</string>
-    <string name="toast_invalid_observatory_sampling">采样数量无效。请使用正数。</string>
 
     <string name="update_check_for_update">检查更新</string>
     <string name="update_already_latest_version">目前已是最新版本</string>
@@ -409,7 +396,7 @@
     <string name="server_proxy_chain_members_insufficient">成员数量不足</string>
     <string name="server_proxy_chain_members_invalid">无效的链路成员: %1$s</string>
 
-    <!-- BackupActivity -->
+    
     <string name="title_configuration_backup_restore">备份 &amp; 还原</string>
     <string name="title_configuration_backup">备份配置</string>
     <string name="title_configuration_restore">还原配置</string>
@@ -483,3 +470,4 @@
     </string-array>
 
 </resources>
+

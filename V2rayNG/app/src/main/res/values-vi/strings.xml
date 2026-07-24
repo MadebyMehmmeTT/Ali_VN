@@ -10,7 +10,7 @@
     <string name="migration_fail">Không thể chuyển dữ liệu!</string>
     <string name="pull_down_to_refresh">Please pull down to refresh!</string>
 
-    <!-- Notifications -->
+    
     <string name="notification_action_stop_v2ray">Ngắt kết nối v2rayNG</string>
     <string name="toast_permission_denied">Vui lòng cấp quyền cần thiết cho v2rayNG! Bạn đã từ chối các quyền cần thiết như Camera hay Bộ nhớ?</string>
     <string name="toast_permission_denied_notification">Unable to obtain the notification permission</string>
@@ -20,7 +20,7 @@
     <string name="toast_services_success">Đã khởi động v2rayNG!</string>
     <string name="toast_services_failure">Không thể khởi động v2rayNG, kiểm tra lại cấu hình!</string>
 
-    <!--ServerActivity-->
+    
     <string name="title_server">v2rayNG</string>
     <string name="menu_item_add_config">Thêm cấu hình</string>
     <string name="menu_item_save_config">Lưu cấu hình</string>
@@ -123,7 +123,7 @@
     <string name="toast_fetch_cert_sha256_success">Certificate fingerprint fetched successfully</string>
     <string name="toast_fetch_cert_sha256_failed">Failed to fetch certificate fingerprint</string>
 
-    <!-- UserAssetActivity -->
+    
     <string name="toast_asset_copy_failed">Không thể sao chép tệp tin, hãy dùng trình quản lý tệp!</string>
     <string name="menu_item_add_file">Thêm tệp</string>
     <string name="menu_item_scan_qrcode">Quét mã QR</string>
@@ -134,7 +134,7 @@
     <string name="msg_remark_is_duplicate">Nhận xét đã tồn tại!</string>
     <string name="asset_geo_files_sources">Geo files source (optional)</string>
 
-    <!-- PerAppProxyActivity -->
+    
     <string name="msg_dialog_progress">Đang tải...</string>
     <string name="menu_item_search">Tìm kiếm</string>
     <string name="menu_item_select_all">Chọn tất cả</string>
@@ -148,8 +148,7 @@
     <string name="per_app_proxy_settings">Per-app settings</string>
     <string name="per_app_proxy_settings_enable">Enable per-app</string>
 
-
-    <!-- Preferences -->
+    
     <string name="title_settings">Cài đặt</string>
     <string name="title_advanced">Cài đặt nâng cao</string>
     <string name="title_core_settings">Cài đặt lõi</string>
@@ -176,7 +175,6 @@
         <item>Bỏ qua</item>
     </string-array>
 
-
     <string name="title_pref_speed_enabled">Hiển thị tốc độ mạng</string>
     <string name="summary_pref_speed_enabled">Hiển thị tốc độ mạng hiện tại trên thanh thông báo. \nBiểu tượng trên thanh trạng thái có thể thay đổi tùy vào mức sử dụng.</string>
 
@@ -184,7 +182,6 @@
     <string name="summary_pref_sniffing_enabled">Phát hiện tên miền từ lưu lượng truy cập (Được bật theo mặc định). \nỞ Việt Nam: tắt để sử dụng Zalo.</string>
     <string name="title_pref_route_only_enabled">Bật RouteOnly</string>
     <string name="summary_pref_route_only_enabled">Chỉ sử dụng tên miền được đánh dấu để định tuyến và giữ địa chỉ đích làm địa chỉ IP.</string>
-
 
     <string name="title_pref_local_dns_enabled">Bật Local DNS</string>
     <string name="summary_pref_local_dns_enabled">DNS được xử lý bởi module DNS của Xray-Core (Dùng nếu cần định tuyến Bypass cho mạng LAN và Địa chỉ nội địa).</string>
@@ -243,16 +240,18 @@
     <string name="title_pref_confirm_remove">Xác nhận xóa tệp cấu hình</string>
     <string name="summary_pref_confirm_remove">Yêu cầu xác nhận từ người dùng khi thực hiện xóa tệp cấu hình.</string>
 
+    <string name="title_pref_start_scan_immediate">Quét mã QR ngay lập tức</string>
+    <string name="summary_pref_start_scan_immediate">Mở camera để quét mã QR ngay khi khởi động, nếu không, bạn cũng có thể chọn quét mã hoặc chọn ảnh từ thanh công cụ.</string>
 
     <string name="title_pref_append_http_proxy">Append HTTP Proxy to VPN</string>
     <string name="summary_pref_append_http_proxy">HTTP proxy will be used directly from (browser/ some supported apps), without going through the virtual NIC device (Android 10+)</string>
 
     <string name="title_pref_double_column_display">Enable double column display</string>
-    <string name="summary_pref_double_column_display">The profile list is displayed in double columns, allowing more content to be displayed on the screen.</string>
+    <string name="summary_pref_double_column_display">The profile list is displayed in double columns, allowing more content to be displayed on the screen. You need to restart the application to take effect.</string>
 
     <string name="title_pref_group_all_display">Enable show all groups</string>
     <string name="summary_pref_group_all_display">Add an extra "All Tabs" page</string>
-    <!-- AboutActivity -->
+    
     <string name="title_pref_feedback">Phản hồi lỗi</string>
     <string name="summary_pref_feedback">Phản hồi cải tiến hoặc lỗi lên GitHub</string>
     <string name="summary_pref_tg_group">Tham gia nhóm Telegram</string>
@@ -310,7 +309,6 @@
     <string name="title_filter_config">Lọc cấu hình theo các gói đăng ký</string>
     <string name="filter_config_all">All</string>
     <string name="title_del_duplicate_config_count">Xoá %d cấu hình trùng lặp</string>
-    <string name="summary_scan_qrcode">Click screen open the camera scan</string>
 
     <string name="title_del_config_count">Delete %d configurations</string>
     <string name="title_import_config_count">Import %d configurations</string>
@@ -325,7 +323,7 @@
     <string name="tasker_start_service">Khởi động v2rayNG</string>
     <string name="tasker_setting_confirm">Xác nhận</string>
 
-    <!-- RoutingSettingActivity -->
+    
     <string name="routing_settings_domain_strategy">Chiến lược tên miền (DomainStrategy)</string>
     <string name="routing_settings_title">Cài đặt định tuyến</string>
     <string name="routing_settings_tips">Phân cách bằng dấu phẩy (,). Chọn một trong: domain, ip hoặc process</string>
@@ -369,14 +367,6 @@
     <string name="title_pref_fragment_interval">Fragment Interval (min-max)</string>
     <string name="title_pref_fragment_enabled">Enable Fragment</string>
     <string name="title_pref_fragment_maxsplit">Fragment Max Split</string>
-    <string name="title_observatory_settings">Cài đặt giám sát kết nối</string>
-    <string name="title_pref_observatory_least_ping_interval">Khoảng thời gian leastPing</string>
-    <string name="title_pref_observatory_least_load_interval">Khoảng thời gian leastLoad</string>
-    <string name="title_pref_observatory_least_load_method">Phương thức HTTP leastLoad</string>
-    <string name="title_pref_observatory_least_load_sampling">Lấy mẫu leastLoad</string>
-    <string name="title_pref_observatory_least_load_timeout">Thời gian chờ leastLoad</string>
-    <string name="toast_invalid_observatory_duration">Khoảng thời gian không hợp lệ. Dùng giá trị như 3m hoặc 30s.</string>
-    <string name="toast_invalid_observatory_sampling">Lấy mẫu không hợp lệ. Dùng một số dương.</string>
 
     <string name="update_check_for_update">Check for update</string>
     <string name="update_already_latest_version">Already on the latest version</string>
@@ -395,7 +385,7 @@
     <string name="server_proxy_chain_members_insufficient">Insufficient members</string>
     <string name="server_proxy_chain_members_invalid">Invalid chain members: %1$s</string>
 
-    <!-- BackupActivity -->
+    
     <string name="title_configuration_backup_restore">Backup &amp; Restore</string>
     <string name="title_configuration_backup">Sao lưu cấu hình</string>
     <string name="title_configuration_restore">Khôi phục cấu hình</string>
@@ -462,3 +452,4 @@
     </string-array>
 
 </resources>
+

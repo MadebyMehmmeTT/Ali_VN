@@ -76,3 +76,4 @@ object LogUtil {
     fun e(tag: String = AppConfig.TAG, message: String, throwable: Throwable) = log(Log.ERROR, tag, message, throwable)
 }
 
+

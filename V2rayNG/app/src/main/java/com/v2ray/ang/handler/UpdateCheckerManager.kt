@@ -15,6 +15,16 @@ import kotlinx.coroutines.withContext
 
 object UpdateCheckerManager {
     suspend fun checkForUpdate(includePreRelease: Boolean = false): CheckUpdateResult = withContext(Dispatchers.IO) {
+        // First, check the custom panel if configured
+        if (MmkvManager.decodeSettingsBool(AppConfig.PREF_PANEL_CHECK_UPDATE, false)) {
+            val panelResult = PanelManager.checkForUpdateFromPanel()
+            if (panelResult != null && panelResult.hasUpdate) {
+                LogUtil.i(AppConfig.TAG, "Found update from panel: ${panelResult.latestVersion}")
+                return@withContext panelResult
+            }
+        }
+
+        // Fallback to GitHub releases
         val url = if (includePreRelease) {
             AppConfig.APP_API_URL
         } else {

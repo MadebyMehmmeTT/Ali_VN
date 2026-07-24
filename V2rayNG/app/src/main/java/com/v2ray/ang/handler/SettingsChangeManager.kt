@@ -1,57 +1,29 @@
 package com.v2ray.ang.handler
 
-import com.v2ray.ang.AppConfig
-import java.util.concurrent.atomic.AtomicBoolean
+import kotlinx.coroutines.flow.MutableStateFlow
 
-/**
- * Manages global flags for actions triggered by setting changes.
- * Uses AtomicBoolean for thread-safe consume operations.
- */
 object SettingsChangeManager {
-
-    private val restartService = AtomicBoolean(false)
-    private val setupGroupTab = AtomicBoolean(false)
-
-    // Keys that affect only UI behavior and do not require core service restart.
-    private val uiOnlyKeys = setOf(
-        AppConfig.PREF_CONFIRM_REMOVE,
-        AppConfig.PREF_DOUBLE_COLUMN_DISPLAY,
-        AppConfig.PREF_GROUP_ALL_DISPLAY,
-        AppConfig.PREF_LANGUAGE,
-        AppConfig.PREF_UI_MODE_NIGHT,
-        AppConfig.PREF_IS_BOOTED,
-    )
-
-    /**
-     * Called when a setting value changes.
-     * Triggers service restart if the key is not UI-only, and always refreshes UI tabs.
-     */
-    fun notifySettingChanged(key: String) {
-        if (key !in uiOnlyKeys) {
-            makeRestartService()
-        }
-        makeSetupGroupTab()
-    }
+    private val _restartService = MutableStateFlow(false)
+    private val _setupGroupTab = MutableStateFlow(false)
 
     fun makeRestartService() {
-        restartService.set(true)
+        _restartService.value = true
     }
 
-    /**
-     * Atomically consumes the restart flag.
-     * @return true if a restart was requested, false otherwise.
-     */
-    fun consumeRestartService(): Boolean =
-        restartService.compareAndSet(true, false)
+    fun consumeRestartService(): Boolean {
+        val v = _restartService.value
+        _restartService.value = false
+        return v
+    }
 
     fun makeSetupGroupTab() {
-        setupGroupTab.set(true)
+        _setupGroupTab.value = true
     }
 
-    /**
-     * Atomically consumes the setup-group-tab flag.
-     * @return true if UI refresh was requested, false otherwise.
-     */
-    fun consumeSetupGroupTab(): Boolean =
-        setupGroupTab.compareAndSet(true, false)
+    fun consumeSetupGroupTab(): Boolean {
+        val v = _setupGroupTab.value
+        _setupGroupTab.value = false
+        return v
+    }
 }
+

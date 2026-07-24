@@ -8,12 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 object AppManagerUtil {
-    /**
-     * Load the list of network applications.
-     *
-     * @param context The context to use.
-     * @return A list of AppInfo objects representing the network applications.
-     */
+    
     suspend fun loadNetworkAppList(context: Context): ArrayList<AppInfo> =
         withContext(Dispatchers.IO) {
             val packageManager = context.packageManager
@@ -38,3 +33,4 @@ object AppManagerUtil {
         context.packageManager.getPackageInfo(context.packageName, 0).lastUpdateTime
 
 }
+

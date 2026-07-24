@@ -19,15 +19,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.lang.ref.SoftReference
 
-/**
- * Foreground service for the root (system-wide) run modes. Unlike [CoreVpnService] it
- * does not use Android VpnService — traffic is routed by iptables instead
- * (see [RootProxyManager]).
- *
- * The in-process core is started first (so its listener is up and the foreground
- * notification is posted promptly), then the root routing rules are installed off the
- * main thread. On teardown the rules are removed before the core stops.
- */
 class CoreRootService : Service(), ServiceControl {
 
     private var setupJob: Job? = null
@@ -41,8 +32,6 @@ class CoreRootService : Service(), ServiceControl {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         LogUtil.i(AppConfig.TAG, "StartCore-Root: command received")
 
-        // Start the in-process core first (this also posts the foreground notification),
-        // then install the root routing off the main thread.
         if (!CoreServiceManager.startCoreLoop(null)) {
             LogUtil.e(AppConfig.TAG, "StartCore-Root: core failed to start")
             stopService()
@@ -61,14 +50,9 @@ class CoreRootService : Service(), ServiceControl {
 
     override fun onDestroy() {
         super.onDestroy()
-        // Wait for any in-flight async setup to finish before tearing down. The rules are
-        // installed off the main thread and can take seconds (the setup script waits for the
-        // tun to appear); if a stop arrives during that window, teardown would run first and
-        // the setup would then re-install the rules + tun pointing at a now-dead core,
-        // blackholing all traffic until the next start/stop cycle clears it.
+
         runBlocking { setupJob?.cancelAndJoin() }
-        // Remove routing rules BEFORE stopping the core so traffic is never redirected
-        // to a dead listener. Synchronous on purpose — leaving rules behind breaks the net.
+
         RootProxyManager.stop(this)
         CoreServiceManager.stopCoreLoop()
     }
@@ -76,7 +60,7 @@ class CoreRootService : Service(), ServiceControl {
     override fun getService(): Service = this
 
     override fun startService() {
-        // do nothing
+
     }
 
     override fun stopService() {
@@ -94,3 +78,4 @@ class CoreRootService : Service(), ServiceControl {
         super.attachBaseContext(context)
     }
 }
+

@@ -31,25 +31,6 @@ import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicLong
 
-// This class is responsible for forwarding xray's HTTP/WS requests through okhttp,
-// so that its TLS and traffic characteristics are okhttp instead of golang/utls.
-// Only WS and xhttp package-up are supported for now.
-// ws:
-// DialerNativeService connects to the control WebSocket provided by the xray core.
-// Then xray sends a task message with method "WS" and the server URL to the control WebSocket.
-// DialerNativeService opens a WebSocket connection to the server URL, and forwards messages between the control WebSocket and the target WebSocket.
-// xhttp(package-up):
-// A task message with streaming down (method == "GET" and streamResponse == true), let's call it Task A.
-// A task message with unary down (streamResponse == false), let's call it Task B.
-// 1. DialerNativeService connects to the control WebSocket provided by the xray core.
-// 2. Xray sends Task A, DialerNativeService sends "ok" and connects to the target URL, then sends the "GET" request to the server; let's call this "Connection A".
-// 3. Xray sends a Task B, called B_1. DialerNativeService sends "ok" and sends the data body to the target URL. Whatever the response is, DialerNativeService sends "ok" or "fail" back to the control WebSocket and closes the connection for Task B_1.
-// 4. The server returns the response for Task B_1 through Connection A, and DialerNativeService forwards the response body to the control WebSocket.
-// 5. Xray sends another Task B, called B_2.
-// ...
-// Finally, the xray client core sends all data through the B_1, B_2, ... tasks.
-// The server closes Connection A, and DialerNativeService closes Task A.
-// The above is a complete cycle.
 class DialerNativeService : IDialerService {
     companion object {
         private const val DEBUG_LOG = false
@@ -62,7 +43,7 @@ class DialerNativeService : IDialerService {
         private val TOKEN_REGEX = Regex("""/websocket\?token=([^"'\s]+)""")
         private val METHODS_WITHOUT_BODY = setOf("GET", "HEAD")
         private val HEADERS_BLACKLIST = hashSetOf(
-            // AI suggest:
+
             "host",
             "content-length",
             "transfer-encoding",
@@ -73,7 +54,7 @@ class DialerNativeService : IDialerService {
             "sec-websocket-version",
             "sec-websocket-protocol",
             "Timing-Allow-Origin",
-            // xray
+
             "Set-Cookie",
             "Cookie",
             "Origin",
@@ -128,7 +109,7 @@ class DialerNativeService : IDialerService {
             .pingInterval(25, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)
-            .readTimeout(0, TimeUnit.SECONDS)  // Disable read timeout for long-running streams
+            .readTimeout(0, TimeUnit.SECONDS)
             .build()
 
         client = nativeClient
@@ -226,7 +207,7 @@ class DialerNativeService : IDialerService {
         val token = runCatching {
             probeClient.newCall(request).execute().use { response ->
                 if (!response.isSuccessful) return null
-                extractControlToken(response.body.string())
+                extractControlToken(response.body?.string() ?: return null)
             }
         }.getOrNull() ?: return null
         val host = uri.host ?: return null
@@ -345,7 +326,6 @@ class DialerNativeService : IDialerService {
             val message = t.message.orEmpty().lowercase()
             return "canceled" in message || "cancelled" in message
         }
-
 
         private fun tryOpenNextControlSocket() {
             scope.launch {
@@ -538,14 +518,13 @@ class DialerNativeService : IDialerService {
                 upstreamCall = call
                 try {
                     call.execute().use { response ->
-                        val source = response.body.source()
+                        val source = response.body?.source() ?: return@use
                         val buffer = Buffer()
                         while (running.get() && !closed.get()) {
                             try {
                                 val read = source.read(buffer, DEFAULT_BUFFER_SIZE.toLong())
                                 if (read < 0) break
 
-                                // Send data, catch exception if WebSocket is closed
                                 try {
                                     controlSocket.send(buffer.readByteString())
                                 } catch (e: Exception) {
@@ -556,7 +535,7 @@ class DialerNativeService : IDialerService {
                                     break
                                 }
                             } catch (_: Exception) {
-                                // Error reading from source, stop streaming
+
                                 break
                             }
                         }
@@ -569,7 +548,7 @@ class DialerNativeService : IDialerService {
                     try {
                         controlSocket.send("fail")
                     } catch (_: Exception) {
-                        // WebSocket may already be closed
+
                     }
                 } finally {
                     upstreamCall = null
@@ -642,7 +621,7 @@ class DialerNativeService : IDialerService {
                             try {
                                 controlSocket.send("fail")
                             } catch (_: Exception) {
-                                // WebSocket may already be closed
+
                             }
                         } finally {
                             upstreamCall = null
@@ -664,8 +643,7 @@ class DialerNativeService : IDialerService {
 
         private fun buildRequest(task: BrowserDialerTask, payload: ByteArray?): Request {
             val requestBuilder = Request.Builder().url(task.url)
-            // task.extra.headers.forEach { (key, value) -> requestBuilder.header(key, value) }
-            // Just set no cache headers
+
             requestBuilder.header("Cache-Control", "no-cache, no-store, must-revalidate")
             task.extra.referrer?.takeIf { it.isNotBlank() }
                 ?.let { requestBuilder.header("Referer", it) }
@@ -708,7 +686,7 @@ class DialerNativeService : IDialerService {
     ) {
         data class Extra(
             val headers: Map<String, String> = emptyMap(),
-            // val cookies: Map<String, String> = emptyMap(),
+
             val protocols: List<String> = emptyList(),
             val referrer: String? = null
         )
@@ -724,7 +702,7 @@ class DialerNativeService : IDialerService {
                     val streamResponse = root.optBoolean("streamResponse", false)
                     val extraObject = root.optJSONObject("extra")
                     val headers = extraObject.optStringMap("headers")
-                    // val cookies = extraObject.optStringMap("cookies")
+
                     val referrer = extraObject?.optString("referrer")?.takeIf { it.isNotBlank() }
                     val protocols = extraObject.optProtocols()
 
@@ -734,7 +712,7 @@ class DialerNativeService : IDialerService {
                         streamResponse = streamResponse,
                         extra = Extra(
                             headers = headers,
-                            // cookies = cookies,
+
                             protocols = protocols,
                             referrer = referrer
                         )
@@ -772,3 +750,4 @@ class DialerNativeService : IDialerService {
         }
     }
 }
+

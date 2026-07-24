@@ -15,13 +15,9 @@ import com.v2ray.ang.util.JsonUtil
 import com.v2ray.ang.util.LogUtil
 import com.v2ray.ang.util.Utils
 
-/**
- * Centralizes ProfileItem -> OutboundBean conversion.
- * Most protocol builders mirror the previous *Fmt.toOutbound behavior.
- */
 object CoreOutboundBuilder {
 
-    /** Dispatches a profile to protocol-specific outbound builder. */
+    
     fun convert(profileItem: ProfileItem): OutboundBean? {
         val outbound = when (profileItem.configType) {
             EConfigType.VMESS -> toOutboundVmess(profileItem)
@@ -41,7 +37,7 @@ object CoreOutboundBuilder {
         return outbound
     }
 
-    /** Applies global outbound options (mux, protocol-specific tweaks, etc.). */
+    
     private fun updateOutboundWithGlobalSettings(outbound: OutboundBean): Boolean {
         try {
             var muxEnabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_MUX_ENABLED, false)
@@ -64,7 +60,7 @@ object CoreOutboundBuilder {
                 outbound.mux?.concurrency = MmkvManager.decodeSettingsString(AppConfig.PREF_MUX_CONCURRENCY, "8").orEmpty().toInt()
                 outbound.mux?.xudpConcurrency = MmkvManager.decodeSettingsString(AppConfig.PREF_MUX_XUDP_CONCURRENCY, "16").orEmpty().toInt()
                 outbound.mux?.xudpProxyUDP443 = MmkvManager.decodeSettingsString(AppConfig.PREF_MUX_XUDP_QUIC, "reject")
-                if (protocol.equals(EConfigType.VLESS.name, true) && outbound.settings?.flow?.isNotEmpty() == true) {
+                if (protocol.equals(EConfigType.VLESS.name, true) && outbound.settings?.vnext?.first()?.users?.first()?.flow?.isNotEmpty() == true) {
                     outbound.mux?.concurrency = -1
                 }
             } else {
@@ -79,50 +75,66 @@ object CoreOutboundBuilder {
         return true
     }
 
-    /** Creates an initial outbound template for a protocol type. */
+    
     fun createInitOutbound(configType: EConfigType): OutboundBean? {
         return when (configType) {
             EConfigType.VMESS,
-            EConfigType.VLESS,
+            EConfigType.VLESS ->
+                return OutboundBean(
+                    protocol = configType.name.lowercase(),
+                    settings = OutboundBean.OutSettingsBean(
+                        vnext = listOf(
+                            OutboundBean.OutSettingsBean.VnextBean(
+                                users = listOf(OutboundBean.OutSettingsBean.VnextBean.UsersBean())
+                            )
+                        )
+                    ),
+                    streamSettings = OutboundBean.StreamSettingsBean()
+                )
+
             EConfigType.SHADOWSOCKS,
             EConfigType.SOCKS,
             EConfigType.HTTP,
-            EConfigType.TROJAN -> OutboundBean(
-                protocol = configType.name.lowercase(),
-                settings = OutboundBean.OutSettingsBean(),
-                streamSettings = OutboundBean.StreamSettingsBean()
-            )
-
-            EConfigType.WIREGUARD -> OutboundBean(
-                protocol = configType.name.lowercase(),
-                settings = OutboundBean.OutSettingsBean(
-                    secretKey = "",
-                    peers = listOf(OutboundBean.OutSettingsBean.WireGuardBean())
+            EConfigType.TROJAN ->
+                return OutboundBean(
+                    protocol = configType.name.lowercase(),
+                    settings = OutboundBean.OutSettingsBean(
+                        servers = listOf(OutboundBean.OutSettingsBean.ServersBean())
+                    ),
+                    streamSettings = OutboundBean.StreamSettingsBean()
                 )
-            )
+
+            EConfigType.WIREGUARD ->
+                return OutboundBean(
+                    protocol = configType.name.lowercase(),
+                    settings = OutboundBean.OutSettingsBean(
+                        secretKey = "",
+                        peers = listOf(OutboundBean.OutSettingsBean.WireGuardBean())
+                    )
+                )
 
             EConfigType.HYSTERIA,
-            EConfigType.HYSTERIA2 -> OutboundBean(
-                protocol = EConfigType.HYSTERIA.name.lowercase(),
-                settings = OutboundBean.OutSettingsBean(),
-                streamSettings = OutboundBean.StreamSettingsBean()
-            )
+            EConfigType.HYSTERIA2 ->
+                return OutboundBean(
+                    protocol = EConfigType.HYSTERIA.name.lowercase(),
+                    settings = OutboundBean.OutSettingsBean(
+                        servers = null
+                    ),
+                    streamSettings = OutboundBean.StreamSettingsBean()
+                )
 
             else -> null
         }
     }
 
-    // ── Per-protocol builders — implementations are identical to each *Fmt.toOutbound ──
-
     private fun toOutboundVmess(profileItem: ProfileItem): OutboundBean? {
         val outboundBean = createInitOutbound(EConfigType.VMESS)
 
-        outboundBean?.settings?.let { settings ->
-            settings.address = getServerAddress(profileItem)
-            settings.port = profileItem.serverPort.orEmpty().toInt()
-            settings.id = profileItem.password.orEmpty()
-            settings.security = profileItem.method
-            settings.level = AppConfig.DEFAULT_LEVEL
+        outboundBean?.settings?.vnext?.first()?.let { vnext ->
+            vnext.address = getServerAddress(profileItem)
+            vnext.port = profileItem.serverPort.orEmpty().toInt()
+            vnext.users[0].id = profileItem.password.orEmpty()
+            vnext.users[0].security = profileItem.method
         }
 
         val sni = outboundBean?.streamSettings?.let {
@@ -139,13 +151,12 @@ object CoreOutboundBuilder {
     private fun toOutboundVless(profileItem: ProfileItem): OutboundBean? {
         val outboundBean = createInitOutbound(EConfigType.VLESS)
 
-        outboundBean?.settings?.let { settings ->
-            settings.address = getServerAddress(profileItem)
-            settings.port = profileItem.serverPort.orEmpty().toInt()
-            settings.id = profileItem.password.orEmpty()
-            settings.encryption = profileItem.method
-            settings.flow = profileItem.flow
-            settings.level = AppConfig.DEFAULT_LEVEL
+        outboundBean?.settings?.vnext?.first()?.let { vnext ->
+            vnext.address = getServerAddress(profileItem)
+            vnext.port = profileItem.serverPort.orEmpty().toInt()
+            vnext.users[0].id = profileItem.password.orEmpty()
+            vnext.users[0].encryption = profileItem.method
+            vnext.users[0].flow = profileItem.flow
         }
 
         val sni = outboundBean?.streamSettings?.let {
@@ -162,12 +173,11 @@ object CoreOutboundBuilder {
     private fun toOutboundShadowsocks(profileItem: ProfileItem): OutboundBean? {
         val outboundBean = createInitOutbound(EConfigType.SHADOWSOCKS)
 
-        outboundBean?.settings?.let { settings ->
-            settings.address = getServerAddress(profileItem)
-            settings.port = profileItem.serverPort.orEmpty().toInt()
-            settings.password = profileItem.password
-            settings.method = profileItem.method
-            settings.level = AppConfig.DEFAULT_LEVEL
+        outboundBean?.settings?.servers?.first()?.let { server ->
+            server.address = getServerAddress(profileItem)
+            server.port = profileItem.serverPort.orEmpty().toInt()
+            server.password = profileItem.password
+            server.method = profileItem.method
         }
 
         val sni = outboundBean?.streamSettings?.let {
@@ -184,12 +194,11 @@ object CoreOutboundBuilder {
     private fun toOutboundTrojan(profileItem: ProfileItem): OutboundBean? {
         val outboundBean = createInitOutbound(EConfigType.TROJAN)
 
-        outboundBean?.settings?.let { settings ->
-            settings.address = getServerAddress(profileItem)
-            settings.port = profileItem.serverPort.orEmpty().toInt()
-            settings.password = profileItem.password
-            settings.flow = profileItem.flow
-            settings.level = AppConfig.DEFAULT_LEVEL
+        outboundBean?.settings?.servers?.first()?.let { server ->
+            server.address = getServerAddress(profileItem)
+            server.port = profileItem.serverPort.orEmpty().toInt()
+            server.password = profileItem.password
+            server.flow = profileItem.flow
         }
 
         val sni = outboundBean?.streamSettings?.let {
@@ -206,13 +215,14 @@ object CoreOutboundBuilder {
     private fun toOutboundSocks(profileItem: ProfileItem): OutboundBean? {
         val outboundBean = createInitOutbound(EConfigType.SOCKS)
 
-        outboundBean?.settings?.let { settings ->
-            settings.address = getServerAddress(profileItem)
-            settings.port = profileItem.serverPort.orEmpty().toInt()
-            settings.level = AppConfig.DEFAULT_LEVEL
+        outboundBean?.settings?.servers?.first()?.let { server ->
+            server.address = getServerAddress(profileItem)
+            server.port = profileItem.serverPort.orEmpty().toInt()
             if (profileItem.username.isNotNullEmpty()) {
-                settings.user = profileItem.username.orEmpty()
-                settings.pass = profileItem.password.orEmpty()
+                val socksUsersBean = OutboundBean.OutSettingsBean.ServersBean.SocksUsersBean()
+                socksUsersBean.user = profileItem.username.orEmpty()
+                socksUsersBean.pass = profileItem.password.orEmpty()
+                server.users = listOf(socksUsersBean)
             }
         }
 
@@ -222,13 +232,14 @@ object CoreOutboundBuilder {
     private fun toOutboundHttp(profileItem: ProfileItem): OutboundBean? {
         val outboundBean = createInitOutbound(EConfigType.HTTP)
 
-        outboundBean?.settings?.let { settings ->
-            settings.address = getServerAddress(profileItem)
-            settings.port = profileItem.serverPort.orEmpty().toInt()
-            settings.level = AppConfig.DEFAULT_LEVEL
+        outboundBean?.settings?.servers?.first()?.let { server ->
+            server.address = getServerAddress(profileItem)
+            server.port = profileItem.serverPort.orEmpty().toInt()
             if (profileItem.username.isNotNullEmpty()) {
-                settings.user = profileItem.username.orEmpty()
-                settings.pass = profileItem.password.orEmpty()
+                val socksUsersBean = OutboundBean.OutSettingsBean.ServersBean.SocksUsersBean()
+                socksUsersBean.user = profileItem.username.orEmpty()
+                socksUsersBean.pass = profileItem.password.orEmpty()
+                server.users = listOf(socksUsersBean)
             }
         }
 
@@ -264,13 +275,6 @@ object CoreOutboundBuilder {
             wireguard.reserved = profileItem.reserved?.takeIf { it.isNotBlank() }?.split(",")?.filter { it.isNotBlank() }?.map { it.trim().toInt() }
         }
 
-        if (!profileItem.finalMask.isNullOrBlank()) {
-            outboundBean?.streamSettings = OutboundBean.StreamSettingsBean()
-            outboundBean?.streamSettings?.let {
-                updateOutboundFinalMask(it, profileItem)
-                it.network = null
-            }
-        }
         return outboundBean
     }
 
@@ -313,23 +317,14 @@ object CoreOutboundBuilder {
         return request
     }
 
-    /**
-     * Configures transport settings for an outbound connection.
-     *
-     * Sets up protocol-specific transport options based on the profile settings.
-     *
-     * @param streamSettings The stream settings to configure
-     * @param profileItem The profile containing transport configuration
-     * @return The Server Name Indication (SNI) value to use, or null if not applicable
-     */
+    
     fun populateTransportSettings(streamSettings: OutboundBean.StreamSettingsBean, profileItem: ProfileItem): String? {
         val transport = profileItem.network.orEmpty()
         val headerType = profileItem.headerType
         val host = profileItem.host
         val path = profileItem.path
         val seed = profileItem.seed
-//        val quicSecurity = profileItem.quicSecurity
-//        val key = profileItem.quicKey
+
         val mode = profileItem.mode
         val serviceName = profileItem.serviceName
         val authority = profileItem.authority
@@ -436,14 +431,6 @@ object CoreOutboundBuilder {
                 streamSettings.httpSettings = h2Setting
             }
 
-//                    "quic" -> {
-//                        val quicsetting = QuicSettingBean()
-//                        quicsetting.security = quicSecurity ?: "none"
-//                        quicsetting.key = key.orEmpty()
-//                        quicsetting.header.type = headerType ?: "none"
-//                        quicSettings = quicsetting
-//                    }
-
             NetworkType.GRPC.type -> {
                 val grpcSetting = OutboundBean.StreamSettingsBean.GrpcSettingsBean()
                 grpcSetting.multiMode = mode == "multi"
@@ -527,15 +514,7 @@ object CoreOutboundBuilder {
         return sni
     }
 
-    /**
-     * Configures TLS or REALITY security settings for an outbound connection.
-     *
-     * Sets up security-related parameters like certificates, fingerprints, and SNI.
-     *
-     * @param streamSettings The stream settings to configure
-     * @param profileItem The profile containing security configuration
-     * @param sniExt An external SNI value to use if the profile doesn't specify one
-     */
+    
     fun populateTlsSettings(streamSettings: OutboundBean.StreamSettingsBean, profileItem: ProfileItem, sniExt: String?) {
         val streamSecurity = profileItem.security.orEmpty()
         val allowInsecure = profileItem.insecure == true && profileItem.pinnedCA256.isNullOrEmpty()
@@ -577,14 +556,7 @@ object CoreOutboundBuilder {
         }
     }
 
-    /**
-     * Updates the outbound with fragment settings for traffic optimization.
-     *
-     * Configures packet fragmentation for TLS and REALITY protocols if enabled.
-     *
-     * @param streamSettings The streamSettings object to be modified
-     * @return true if fragment configuration was successful, false otherwise
-     */
+    
     private fun updateOutboundFragment(streamSettings: OutboundBean.StreamSettingsBean): Boolean {
         try {
             if (MmkvManager.decodeSettingsBool(AppConfig.PREF_FRAGMENT_ENABLED, false) == false) {
@@ -635,7 +607,6 @@ object CoreOutboundBuilder {
                 JsonUtil.parseString(JsonUtil.toJson(existingFinalMask))
             } ?: JsonObject()
 
-            // finalmask.tcp / finalmask.udp are arrays; prepend mask at index 0.
             fun prependMask(scope: String, mask: OutboundBean.StreamSettingsBean.FinalMaskBean.MaskBean) {
                 val current = finalMaskObj.get(scope)
                 if (current != null && current.isJsonArray && current.asJsonArray.size() > 0) {
@@ -670,23 +641,12 @@ object CoreOutboundBuilder {
         if (MmkvManager.decodeSettingsString(AppConfig.PREF_OUTBOUND_DOMAIN_RESOLVE_METHOD, "1") != "2") {
             return domain
         }
-        //Resolve and replace domain
+
         val resolvedIps = HttpUtil.resolveHostToIP(domain, MmkvManager.decodeSettingsBool(AppConfig.PREF_PREFER_IPV6))
         if (resolvedIps.isNullOrEmpty()) {
             return domain
         }
         return resolvedIps.first()
     }
-
-    fun updateOutboundFinalMask(streamSettings: OutboundBean.StreamSettingsBean, profileItem: ProfileItem) {
-        val finalMask = profileItem.finalMask
-        finalMask?.let {
-            val parsedFinalMask = JsonUtil.parseString(profileItem.finalMask)
-            if (parsedFinalMask != null) {
-                streamSettings.finalmask = parsedFinalMask
-            } else {
-                LogUtil.w("V2rayConfigManager", "Invalid finalMask JSON, keeping previously generated finalmask")
-            }
-        }
-    }
 }
+

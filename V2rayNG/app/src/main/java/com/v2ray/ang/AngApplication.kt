@@ -1,23 +1,20 @@
 package com.v2ray.ang
 
-import android.app.Application
 import android.content.Context
+import android.util.Log
+import androidx.multidex.MultiDexApplication
 import androidx.work.Configuration
 import androidx.work.WorkManager
 import com.tencent.mmkv.MMKV
 import com.v2ray.ang.AppConfig.ANG_PACKAGE
-import com.v2ray.ang.compose.ThemeManager
 import com.v2ray.ang.handler.SettingsManager
 
-class AngApplication : Application() {
+class AngApplication : MultiDexApplication() {
     companion object {
         lateinit var application: AngApplication
+        private const val TAG = "AngApplication"
     }
 
-    /**
-     * Attaches the base context to the application.
-     * @param base The base context.
-     */
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
         application = this
@@ -27,21 +24,39 @@ class AngApplication : Application() {
         .setDefaultProcessName("${ANG_PACKAGE}:bg")
         .build()
 
-    /**
-     * Initializes the application.
-     */
     override fun onCreate() {
         super.onCreate()
 
-        MMKV.initialize(this)
+        try {
+            MMKV.initialize(this)
+        } catch (e: Exception) {
+            Log.e(TAG, "MMKV initialization failed", e)
+        }
 
-        // Initialize WorkManager with the custom configuration
-        WorkManager.initialize(this, workManagerConfiguration)
+        try {
+            WorkManager.initialize(this, workManagerConfiguration)
+        } catch (e: Exception) {
+            Log.e(TAG, "WorkManager initialization failed", e)
+        }
 
-        // Ensure critical preference defaults are present in MMKV early
-        SettingsManager.initApp(this)
+        try {
+            SettingsManager.initApp(this)
+        } catch (e: Exception) {
+            Log.e(TAG, "SettingsManager.initApp failed", e)
+        }
 
-        // Initialize theme state from MMKV
-        ThemeManager.refresh()
+        try {
+            SettingsManager.setNightMode()
+        } catch (e: Exception) {
+            Log.e(TAG, "setNightMode failed", e)
+        }
+
+        try {
+            es.dmoral.toasty.Toasty.Config.getInstance()
+                .setGravity(android.view.Gravity.BOTTOM, 0, 300)
+                .apply()
+        } catch (e: Exception) {
+            Log.e(TAG, "Toasty config failed", e)
+        }
     }
 }

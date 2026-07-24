@@ -77,3 +77,4 @@ object CertificateFingerprintManager {
         return sni?.takeUnless { Utils.isPureIpAddress(it) }
     }
 }
+

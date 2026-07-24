@@ -20,10 +20,6 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicInteger
 
-/**
- * Worker that runs a batch of real-ping tests independently.
- * Each batch owns its own CoroutineScope/dispatcher and can be cancelled separately.
- */
 class RealPingWorkerService(
     private val context: Context,
     private val guids: List<String>,
@@ -46,7 +42,7 @@ class RealPingWorkerService(
                     val result = startRealPing(guid)
                     onEvent(RealPingEvent.Result(guid, result))
                 } catch (_: Throwable) {
-                    // ignore
+
                 } finally {
                     val count = totalCount.decrementAndGet()
                     val left = runningCount.decrementAndGet()
@@ -75,7 +71,7 @@ class RealPingWorkerService(
         try {
             dispatcher.close()
         } catch (_: Throwable) {
-            // ignore
+
         }
     }
 
@@ -85,8 +81,6 @@ class RealPingWorkerService(
         val config = MmkvManager.decodeServerConfig(guid) ?: return retFailure
         if (!config.configType.isComplexType()
             && config.configType != EConfigType.HYSTERIA2
-            && config.configType != EConfigType.WIREGUARD
-            && config.alpn?.startsWith("h3") != true
             && config.server.isNotNullEmpty()
             && config.serverPort?.toIntOrNull() != null
         ) {
@@ -105,3 +99,4 @@ class RealPingWorkerService(
         return CoreNativeManager.measureOutboundDelay(configResult.content, SettingsManager.getDelayTestUrl())
     }
 }
+

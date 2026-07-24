@@ -1,29 +1,24 @@
 package com.v2ray.ang.helper
 
-import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
-import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
 import com.v2ray.ang.extension.toast
 import com.v2ray.ang.util.LogUtil
 
-/**
- * Helper for choosing and creating files using Android Storage Access Framework.
- * Supports both file selection (ACTION_GET_CONTENT) and file creation (CreateDocument).
- */
-class FileChooserHelper(private val activity: ComponentActivity) {
+class FileChooserHelper(private val activity: AppCompatActivity) {
     private var fileChooserCallback: ((Uri?) -> Unit)? = null
     private var documentCreateCallback: ((Uri?) -> Unit)? = null
 
     private val fileChooserLauncher: ActivityResultLauncher<Intent> =
         activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             val uri = result.data?.data
-            if (result.resultCode == Activity.RESULT_OK && uri != null) {
+            if (result.resultCode == AppCompatActivity.RESULT_OK && uri != null) {
                 fileChooserCallback?.invoke(uri)
             } else {
                 fileChooserCallback?.invoke(null)
@@ -37,27 +32,16 @@ class FileChooserHelper(private val activity: ComponentActivity) {
             documentCreateCallback = null
         }
 
-    /**
-     * Launch file chooser with ACTION_GET_CONTENT intent to select an existing file.
-     *
-     * @param mimeType MIME type filter for files
-     * @param onResult Callback invoked with the selected file URI (null if cancelled)
-     */
     fun launch(
         mimeType: String = "*/*",
         onResult: (Uri?) -> Unit
     ) {
         fileChooserCallback = onResult
-
-        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
-            type = mimeType
-            addCategory(Intent.CATEGORY_OPENABLE)
-        }
-
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = mimeType
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
         try {
-            fileChooserLauncher.launch(
-                Intent.createChooser(intent, activity.getString(R.string.title_file_chooser))
-            )
+            fileChooserLauncher.launch(intent)
         } catch (ex: ActivityNotFoundException) {
             LogUtil.e(AppConfig.TAG, "File chooser activity not found", ex)
             activity.toast(R.string.toast_require_file_manager)
@@ -66,12 +50,6 @@ class FileChooserHelper(private val activity: ComponentActivity) {
         }
     }
 
-    /**
-     * Launch document creator to create a new file at user-selected location.
-     *
-     * @param fileName Default file name for the new document
-     * @param onResult Callback invoked with the created file URI (null if cancelled)
-     */
     fun createDocument(
         fileName: String,
         onResult: (Uri?) -> Unit

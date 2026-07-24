@@ -1,5 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
+    <string name="home_connect">اتصال</string>
+    <string name="home_connecting">در حال اتصال…</string>
+    <string name="home_connected">متصل شد</string>
+    <string name="home_connected_title">متصل هستید</string>
+    <string name="home_choose_location">انتخاب لوکیشن</string>
+    <string name="home_unknown_location">نامشخص</string>
+    <string name="home_no_server_selected">هنوز سروری انتخاب نشده است</string>
+    <string name="home_ping_ms">%d ms</string>
+    
+    <string name="home_please_wait" translatable="false">Please wait…</string>
+    <string name="home_tap_to_connect">برای شروع، دکمه اتصال را بزنید</string>
+    <string name="home_tap_to_disconnect">برای قطع اتصال ضربه بزنید</string>
+    <string name="home_tap_to_retry">برای تلاش دوباره ضربه بزنید</string>
+    <string name="home_testing_title">در حال یافتن بهترین سرور</string>
+    <string name="home_testing_subtitle">در حال تست سرورها…</string>
+    <string name="home_connecting_title">در حال اتصال</string>
+    <string name="home_connecting_subtitle">در انتظار تایید دسترسی VPN…</string>
+    <string name="home_permission_denied">دسترسی VPN داده نشد</string>
+    <string name="home_all_failed_title">سروری پیدا نشد</string>
+    <string name="home_all_failed">اتصال برقرار نشد. دوباره تلاش کنید.</string>
+    <string name="home_idle_title">آماده اتصال</string>
+    <string name="home_idle_subtitle">برای شروع، دکمه اتصال را بزنید</string>
+    <string name="home_menu_retry">تلاش مجدد</string>
+    <string name="server_list_title">انتخاب لوکیشن</string>
+    <string name="server_list_empty">هنوز نتیجه‌ای نیست. لطفاً صبر کنید تا سرورها تست شوند…</string>
+    <string name="home_telegram_prompt_message">لطفاً برای آپدیت‌ها در کانال تلگرام ما عضو شوید.</string>
+    <string name="home_telegram_prompt_join">عضویت</string>
+    <string name="home_telegram_prompt_later">بعدا</string>
+    <string name="about_made_by">ساخته شده توسط تیم حامد وی‌پی‌ان</string>
+    <string name="about_thanks">با تشکر از آقا حامد و رستا و بقیه بچه‌های تیم</string>
+    <string name="about_tg_channel_label">کانال تلگرام</string>
+    <string name="about_version_format">نسخه %s</string>
+
     <string name="app_widget_name">تعویض</string>
     <string name="app_tile_name">تعویض</string>
     <string name="app_tile_first_use">برای اولین استفاده از این قابلیت، لطفاً ابتدا از داخل برنامه یک سرور اضافه کنید</string>
@@ -10,7 +44,7 @@
     <string name="migration_fail">انتقال داده‌ها با شکست مواجه شد!</string>
     <string name="pull_down_to_refresh">برای بروزرسانی، صفحه را به پایین بکشید!</string>
 
-    <!-- Notifications -->
+    
     <string name="notification_action_stop_v2ray">توقف</string>
     <string name="toast_permission_denied">امکان دریافت مجوز وجود ندارد</string>
     <string name="toast_permission_denied_notification">امکان دریافت مجوز ارسال اعلان وجود ندارد</string>
@@ -20,7 +54,7 @@
     <string name="toast_services_success">سرویس با موفقیت شروع شد</string>
     <string name="toast_services_failure">شروع سرویس با شکست مواجه شد</string>
 
-    <!--ServerActivity-->
+    
     <string name="title_server">فایل کانفیگ</string>
     <string name="menu_item_add_config">افزودن کانفیگ</string>
     <string name="menu_item_save_config">ذخیره کانفیگ</string>
@@ -29,7 +63,7 @@
     <string name="menu_item_import_config_qrcode">کانفیگ را از QRcode وارد کنید</string>
     <string name="menu_item_import_config_clipboard">کانفیگ را از کلیپ ‌بورد وارد کنید</string>
     <string name="menu_item_import_config_local">کانفیگ را از محلی وارد کنید</string>
-<string name="menu_item_import_config_policy_group">افزودن [گروه خط‌‌ مشی]</string>
+    <string name="menu_item_import_config_policy_group">افزودن [گروه خط‌‌ مشی]</string>
     <string name="menu_item_import_config_proxy_chain">افزودن [زنجیره پروکسی]</string>
     <string name="menu_item_import_config_manually_vmess">افزودن [VMess]</string>
     <string name="menu_item_import_config_manually_vless">افزودن [VLESS]</string>
@@ -123,7 +157,7 @@
     <string name="toast_fetch_cert_sha256_success">Certificate fingerprint fetched successfully</string>
     <string name="toast_fetch_cert_sha256_failed">Failed to fetch certificate fingerprint</string>
 
-    <!-- UserAssetActivity -->
+    
     <string name="toast_asset_copy_failed">کپی فایل شکست خورد، لطفا از برنامه مدیریت فایل استفاده کنید</string>
     <string name="menu_item_add_file">افزودن فایل ‌ها</string>
     <string name="menu_item_scan_qrcode">اسکن QRcode</string>
@@ -134,7 +168,7 @@
     <string name="msg_remark_is_duplicate">این نام از قبل وجود دارد</string>
     <string name="asset_geo_files_sources">منبع فایل های جغرافیایی (اختیاری)</string>
 
-    <!-- PerAppProxyActivity -->
+    
     <string name="msg_dialog_progress">در حال بارگذاری...</string>
     <string name="menu_item_search">جستجو</string>
     <string name="menu_item_select_all">انتخاب همه</string>
@@ -148,7 +182,7 @@
     <string name="per_app_proxy_settings">تنظیمات به تفکیک برنامه</string>
     <string name="per_app_proxy_settings_enable">فعال‌سازی به تفکیک برنامه</string>
 
-    <!-- Preferences -->
+    
     <string name="title_settings">تنظیمات</string>
     <string name="title_advanced">تنظیمات پیشرفته</string>
     <string name="title_core_settings">تنظیمات هسته</string>
@@ -182,7 +216,6 @@
     <string name="summary_pref_sniffing_enabled">تلاش برای استخراج نام دامنه واقعی از بسته‌های ترافیک (به‌طور پیش‌فرض روشن است)</string>
     <string name="title_pref_route_only_enabled">فعال‌سازی فقط مسیر یابی (RouteOnly)</string>
     <string name="summary_pref_route_only_enabled">از نام دامنه (Snnifed) فقط برای مسیریابی استفاده کنید و آدرس مقصد را به عنوان IP ذخیره کنید.</string>
-
 
     <string name="title_pref_local_dns_enabled">فعال کردن DNS محلی</string>
     <string name="summary_pref_local_dns_enabled">درخواست های DNS به هسته وارد شده و توسط ماژول DNS پردازش می شوند (توصیه می شود در صورت نیاز به مسیریابی برای دور زدن آدرس های LAN و سرزمین اصلی فعال شود)</string>
@@ -241,16 +274,18 @@
     <string name="title_pref_confirm_remove">تایید حذف کانفیگ</string>
     <string name="summary_pref_confirm_remove">آیا برای حذف کانفیگ نیاز به تایید دوم توسط کاربر است</string>
 
+    <string name="title_pref_start_scan_immediate">شروع فوری اسکن QR کد</string>
+    <string name="summary_pref_start_scan_immediate">دوربین را برای اسکن بلافاصله در هنگام راه اندازی باز کنید، در غیر این صورت می توانید کد را اسکن کنید یا عکسی را در نوار ابزار انتخاب کنید.</string>
 
     <string name="title_pref_append_http_proxy">پروکسی HTTP را به VPN اضافه کنید</string>
     <string name="summary_pref_append_http_proxy">پروکسی HTTP مستقیماً از (مرورگر/برخی برنامه‌های پشتیبانی‌شده)، بدون استفاده از دستگاه NIC مجازی (Android 10+) استفاده می‌شود.</string>
 
     <string name="title_pref_double_column_display">فعال کردن نمایش دو ستون</string>
-    <string name="summary_pref_double_column_display">The profile list is displayed in double columns, allowing more content to be displayed on the screen.</string>
+    <string name="summary_pref_double_column_display">لیست نمایه در دو ستون نمایش داده می شود و امکان نمایش محتوای بیشتری را بر روی صفحه نمایش می دهد. برای اجرا باید برنامه را مجددا راه اندازی کنید.</string>
 
     <string name="title_pref_group_all_display">Enable show all groups</string>
     <string name="summary_pref_group_all_display">Add an extra "All Tabs" page</string>
-    <!-- AboutActivity -->
+    
     <string name="title_pref_feedback">بازخورد</string>
     <string name="summary_pref_feedback">بازخورد یا گزارش اشکالات در گیت‌ هاب</string>
     <string name="summary_pref_tg_group">عضویت در گروه تلگرام</string>
@@ -307,7 +342,6 @@
     <string name="title_filter_config">فیلتر کردن کانفیگ‌ها</string>
     <string name="filter_config_all">همه</string>
     <string name="title_del_duplicate_config_count">حذف %d کانفیگ تکراری</string>
-    <string name="summary_scan_qrcode">Click screen open the camera scan</string>
 
     <string name="title_del_config_count">حذف %d کانفیگ</string>
     <string name="title_import_config_count">وارد کردن %d کانفیگ</string>
@@ -322,7 +356,7 @@
     <string name="tasker_start_service">شروع خدمات</string>
     <string name="tasker_setting_confirm">تایید</string>
 
-    <!-- RoutingSettingActivity -->
+    
     <string name="routing_settings_domain_strategy">استراتژی دامنه</string>
     <string name="routing_settings_title">تنظیمات مسیریابی</string>
     <string name="routing_settings_tips">با کاما (,) جدا کنید. یکی از موارد domain، ip یا process را وارد کنید</string>
@@ -364,14 +398,6 @@
     <string name="title_pref_fragment_interval">فاصله بین بسته های فرگمنت (حداقل-حداکثر)</string>
     <string name="title_pref_fragment_enabled">فعال کردن فرگمنت</string>
     <string name="title_pref_fragment_maxsplit">حداکثر تقسیم فرگمنت</string>
-    <string name="title_observatory_settings">تنظیمات پایش اتصال</string>
-    <string name="title_pref_observatory_least_ping_interval">فاصله leastPing</string>
-    <string name="title_pref_observatory_least_load_interval">فاصله leastLoad</string>
-    <string name="title_pref_observatory_least_load_method">روش HTTP برای leastLoad</string>
-    <string name="title_pref_observatory_least_load_sampling">نمونه‌برداری leastLoad</string>
-    <string name="title_pref_observatory_least_load_timeout">مهلت زمانی leastLoad</string>
-    <string name="toast_invalid_observatory_duration">مدت زمان نامعتبر است. از مقداری مانند 3m یا 30s استفاده کنید.</string>
-    <string name="toast_invalid_observatory_sampling">مقدار نمونه‌برداری نامعتبر است. از یک عدد مثبت استفاده کنید.</string>
 
     <string name="update_check_for_update">بررسی به روز رسانی</string>
     <string name="update_already_latest_version">در حال حاضر آخرین نسخه نصب شده است</string>
@@ -390,7 +416,7 @@
     <string name="server_proxy_chain_members_insufficient">تعداد اعضا کافی نیست</string>
     <string name="server_proxy_chain_members_invalid">اعضای نامعتبر زنجیره: %1$s</string>
 
-    <!-- BackupActivity -->
+    
     <string name="title_configuration_backup_restore">پشتیبان‌گیری و بازیابی</string>
     <string name="title_configuration_backup">پشتیبان گیری از پیکربندی</string>
     <string name="title_configuration_restore">بازیابی پیکربندی</string>

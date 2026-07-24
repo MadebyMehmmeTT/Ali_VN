@@ -11,7 +11,7 @@ import android.webkit.WebViewClient
 class DialerWebviewService : IDialerService {
     private var webView: WebView? = null
     private val handler = Handler(Looper.getMainLooper())
-    private val keepAliveInterval = 30_000L // 30 seconds
+    private val keepAliveInterval = 30_000L
 
     private val keepAliveRunnable = object : Runnable {
         override fun run() {
@@ -23,11 +23,7 @@ class DialerWebviewService : IDialerService {
         }
     }
 
-
-    /**
-     * Starts the WebView.
-     * @param context Service context
-     */
+    
     @SuppressLint("SetJavaScriptEnabled")
     override fun start(context: Context, dialerAddr: String) {
         if (webView != null) stop()
@@ -38,9 +34,9 @@ class DialerWebviewService : IDialerService {
             settings.apply {
                 javaScriptEnabled = true
                 domStorageEnabled = true
-                // Allow JS to run even if not triggered by user
+
                 mediaPlaybackRequiresUserGesture = false
-                // Prevent aggressive caching issues
+
                 cacheMode = WebSettings.LOAD_DEFAULT
             }
 
@@ -63,7 +59,7 @@ class DialerWebviewService : IDialerService {
         webView?.apply {
             stopLoading()
             pauseTimers()
-            // Important to call onPause to stop internal Chromium threads properly
+
             onPause()
             destroy()
         }
@@ -71,3 +67,4 @@ class DialerWebviewService : IDialerService {
     }
 
 }
+

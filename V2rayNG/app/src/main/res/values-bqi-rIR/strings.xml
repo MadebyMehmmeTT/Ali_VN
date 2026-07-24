@@ -10,7 +10,7 @@
     <string name="migration_fail">جاگورویی داده یل شکست خرد!</string>
     <string name="pull_down_to_refresh">سی وانۊ کردن، بلگه ن بلم بکشین!</string>
 
-    <!-- Notifications -->↓
+    ↓
     <string name="notification_action_stop_v2ray">واڌاشتن</string>
     <string name="toast_permission_denied">گرؽڌن موجوز مومکن نؽڌ</string>
     <string name="toast_permission_denied_notification">گرؽڌن موجوز وارسۊوی مومکن نؽڌ</string>
@@ -20,7 +20,7 @@
     <string name="toast_services_success">ره وستن سرویس وا مووفقیت ٱنجوم وابی</string>
     <string name="toast_services_failure">ره وستن سرویس وا مووفقیت ٱنجوم نوابی</string>
 
-    <!--ServerActivity-->
+    
     <string name="title_server">فایل کانفیگ</string>
     <string name="menu_item_add_config">ٱووردن کانفیگ</string>
     <string name="menu_item_save_config">زفت کردن کانفیگ</string>
@@ -123,7 +123,7 @@
     <string name="toast_fetch_cert_sha256_success">جا کلک گوواهی وا مووفقیت گرؽڌه وابی</string>
     <string name="toast_fetch_cert_sha256_failed">گرؽڌن جا کلک گوواهی مووفق نبی</string>
 
-    <!-- UserAssetActivity -->
+    
     <string name="toast_asset_copy_failed">لف گیری فایل ٱنجوم نوابی، ز ی برنومه دؽوۉداری فایل هیاری بگرین</string>
     <string name="menu_item_add_asset">ٱووردن دارایی</string>
     <string name="menu_item_add_file">ٱووردن فایل</string>
@@ -136,7 +136,7 @@
     <string name="msg_remark_is_duplicate">ای نوم ز زیتر بیڌس</string>
     <string name="asset_geo_files_sources">بونچک فایلا جوقرافیایی (اختیاری)</string>
 
-    <!-- PerAppProxyActivity -->
+    
     <string name="msg_dialog_progress">هونی بار ونی ابۊ...</string>
     <string name="menu_item_search">پیتینیڌن</string>
     <string name="menu_item_select_all">پسند پوی</string>
@@ -150,8 +150,7 @@
     <string name="per_app_proxy_settings">سامووا ب تفکیک برنومه</string>
     <string name="per_app_proxy_settings_enable">ره وندن ب تفکیک برنومه</string>
 
-
-    <!-- Preferences -->
+    
     <string name="title_settings">سامووا</string>
     <string name="title_advanced">سامووا پؽش رئڌه</string>
     <string name="title_core_settings">سامووا هسته</string>
@@ -243,16 +242,18 @@
     <string name="title_pref_confirm_remove">قوۊل کردن پاک کردن کانفیگ</string>
     <string name="summary_pref_confirm_remove">سی پاک وابیڌن فایل کانفیگ، لنگ قوۊل کردن دووارته ز سمت منتور هڌ.</string>
 
+    <string name="title_pref_start_scan_immediate">زی بنه پا اسکن کود QR</string>
+    <string name="summary_pref_start_scan_immediate">شؽواتگرن سی اسکن، زی مجال ره وندن بۊگۊشین، ٱندی ترین کودن اسکن کۊنین یا شؽواتی ن منه نوار ٱوزار پسند کۊنین.</string>
 
     <string name="title_pref_append_http_proxy">پروکسی HTTP ن و VPN ازاف کۊنین</string>
     <string name="summary_pref_append_http_proxy">پروکسی HTTP ن موسقیمن ز (مۊرۊرگر/ی قرد ز برنومه یل لادراری بیڌه)، بؽ استفاڌه ز دسگا NIC مجازی (Android 10+) استفاڌه ابۊ.</string>
 
     <string name="title_pref_double_column_display">ره وندن نشووݩ داڌن دو سۊتۊنی</string>
-    <string name="summary_pref_double_column_display">The profile list is displayed in double columns, allowing more content to be displayed on the screen.</string>
+    <string name="summary_pref_double_column_display">نومگه نمایه یل من دو سۊتۊن نشووݩ داڌه ابۊن وو چینوو ترین موئتوا بیشتری ن سیل کۊنین.\nسی ره وستن، وا برنومه ن ز نۊ ره ونین.</string>
 
     <string name="title_pref_group_all_display">نشووݩ داڌن پوی بونکۊ یل ن ره ونین</string>
     <string name="summary_pref_group_all_display">ی بلگه «پوی بونکۊ یل کانفیگ» ازاف کۊنین</string>
-    <!-- AboutActivity -->
+    
     <string name="title_pref_feedback">فشناڌن منشڌ</string>
     <string name="summary_pref_feedback">فشناڌن منشڌ یا گوزارش موشکلا من Github</string>
     <string name="summary_pref_tg_group">ٱووڌن من بونکۊ تلگرام</string>
@@ -316,7 +317,6 @@
     <string name="title_filter_config">فیلتر کردن کانفیگا</string>
     <string name="filter_config_all">پوی</string>
     <string name="title_del_duplicate_config_count">پاک کردن %d کانفیگ تکراری</string>
-    <string name="summary_scan_qrcode">Click screen open the camera scan</string>
 
     <string name="title_del_config_count">پاک کردن %d کانفیگ</string>
     <string name="title_import_config_count">و من ٱووردن %d کانفیگ</string>
@@ -331,7 +331,7 @@
     <string name="tasker_start_service">ره وندن سرویس</string>
     <string name="tasker_setting_confirm">قوۊل</string>
 
-    <!-- RoutingSettingActivity -->
+    
     <string name="routing_settings_domain_strategy">نشقه دامنه</string>
     <string name="routing_settings_title">سامووا تور جوستن</string>
     <string name="routing_settings_tips">وا کاما (,) ز یک جوڌا ابۊن؛ یکی ن بزنین: domain، ip یا process</string>
@@ -373,14 +373,6 @@
     <string name="title_pref_fragment_interval">فاسله منجا کتنا فرگمنت (هدقل-هدکسر)</string>
     <string name="title_pref_fragment_enabled">ره وندن فرگمنت</string>
     <string name="title_pref_fragment_maxsplit">هدکسر تقسیم فرگمنت</string>
-    <string name="title_observatory_settings">سامووا واجۊری منپیز</string>
-    <string name="title_pref_observatory_least_ping_interval">فاسله leastPing</string>
-    <string name="title_pref_observatory_least_load_interval">فاسله leastLoad</string>
-    <string name="title_pref_observatory_least_load_method">روش HTTP سی leastLoad</string>
-    <string name="title_pref_observatory_least_load_sampling">نمونه گیری leastLoad</string>
-    <string name="title_pref_observatory_least_load_timeout">مهلت leastLoad</string>
-    <string name="toast_invalid_observatory_duration">زما نادروسته. یه ارزشی وری 3m یا 30s بکار ببرین.</string>
-    <string name="toast_invalid_observatory_sampling">نمونه گیری نادروسته. یه شماره مثبت بکار ببرین.</string>
 
     <string name="update_check_for_update">واجۊری سی ورۊ رسۊوی</string>
     <string name="update_already_latest_version">سکو نوسخه دیندایی پۊرنیڌه هڌ</string>
@@ -399,7 +391,7 @@
     <string name="server_proxy_chain_members_insufficient">تعداد ٱئزا بس نؽ</string>
     <string name="server_proxy_chain_members_invalid">ٱئزا ناموئتبر زنجیره: %1$s</string>
 
-    <!-- BackupActivity -->
+    
     <string name="title_configuration_backup_restore">لادراری گرؽڌن &amp; وورگندن</string>
     <string name="title_configuration_backup">لادراری گرؽڌن ز کانفیگ</string>
     <string name="title_configuration_restore">وورگندن کانفیگ</string>
@@ -473,3 +465,4 @@
     </string-array>
 
 </resources>
+
