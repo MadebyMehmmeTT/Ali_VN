@@ -153,6 +153,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.material)
     implementation(libs.androidx.preference)
+    implementation(libs.androidx.multidex)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.lifecycle.runtime.compose)
 

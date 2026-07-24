@@ -1,4 +1,5 @@
 [versions]
+multidex = "2.0.1"
 preference = "1.2.1"
 material = "1.14.0"
 agp = "9.3.0"
@@ -22,6 +23,7 @@ camerax = "1.6.1"
 composeBom = "2026.06.01"
 reorderable = "3.1.0"
 [libraries]
+androidx-multidex = { group = "androidx.multidex", name = "multidex", version.ref = "multidex" }
 androidx-preference = { group = "androidx.preference", name = "preference-ktx", version.ref = "preference" }
 androidx-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
