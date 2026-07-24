@@ -38,7 +38,7 @@ class ScannerActivity : HelperBaseActivity() {
                 setHapticSuccessFeedback(true)
                 setShowTorchToggle(true)
                 setShowCloseButton(true)
-                setBarcodeFormats(listOf(BarcodeFormat.QR_CODE))
+                setBarcodeFormats(listOf(BarcodeFormat.FORMAT_QR_CODE))
             }
         )
     }
