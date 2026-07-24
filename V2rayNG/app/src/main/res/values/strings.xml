@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">MEHMMET VPN</string>
+    <string name="app_name" translatable="false">HAMED VPN</string>
 
     
     <string name="home_connect">Connect</string>
@@ -36,7 +36,7 @@
     <string name="about_tg_channel_label">Telegram channel</string>
     <string name="about_tg_channel_handle" translatable="false">@hamedvpns</string>
     <string name="about_version_format">v%s</string>
-    <string name="home_icon_idle" translatable="false">🔒</string>
+    <string name="home_icon_idle" translatable="false">🦦</string>
     <string name="home_icon_testing" translatable="false">⏳</string>
     <string name="home_icon_connected" translatable="false">✅</string>
     <string name="home_icon_warning" translatable="false">⚠️</string>
