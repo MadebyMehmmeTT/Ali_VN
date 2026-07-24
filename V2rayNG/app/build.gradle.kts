@@ -155,6 +155,8 @@ dependencies {
     implementation(libs.androidx.material)
     implementation(libs.androidx.preference)
     implementation(libs.androidx.multidex)
+    implementation(libs.blacksquircle.editorkit)
+    implementation(libs.blacksquircle.language.json)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.lifecycle.runtime.compose)
 
