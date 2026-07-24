@@ -367,7 +367,7 @@ object Utils {
     }
 
     
-    fun isXray(): Boolean = BuildConfig.APPLICATION_ID.startsWith("com.v2ray.ang")
+    fun isXray(): Boolean = true
 
     
     fun isGoogleFlavor(): Boolean = BuildConfig.FLAVOR == "playstore"
