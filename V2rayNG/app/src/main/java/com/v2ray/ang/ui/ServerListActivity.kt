@@ -97,6 +97,10 @@ class ServerListActivity : BaseActivity() {
     companion object {
         const val EXTRA_SELECTED_GUID = "selectedGuid"
     }
+    override fun dispatchTouchEvent(ev: android.view.MotionEvent): Boolean {
+        swipeDetector.onTouchEvent(ev)
+        return super.dispatchTouchEvent(ev)
+    }
 }
 
 private data class ResultRow(
@@ -141,9 +145,5 @@ private class ResultAdapter(private val onClick: (String) -> Unit) : RecyclerVie
             itemBinding.ivSelected.isVisible = row.isSelected
             itemBinding.root.setOnClickListener { onClick(row.guid) }
         }
-    }
-    override fun dispatchTouchEvent(ev: android.view.MotionEvent): Boolean {
-        swipeDetector.onTouchEvent(ev)
-        return super.dispatchTouchEvent(ev)
     }
 }
