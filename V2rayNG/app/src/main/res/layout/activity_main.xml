@@ -240,6 +240,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <include layout="@layout/bottom_nav_bar" />
+    <include android:id="@+id/bottom_nav" layout="@layout/bottom_nav_bar" />
 
 </LinearLayout>
