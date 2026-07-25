@@ -21,6 +21,7 @@ import com.v2ray.ang.util.CountryUtils
 import com.v2ray.ang.util.Utils
 
 class ServerListActivity : BaseActivity() {
+    private lateinit var swipeDetector: android.view.GestureDetector
 
     private val binding by lazy { ActivityServerListBinding.inflate(layoutInflater) }
     private val adapter = ResultAdapter { guid ->
@@ -43,7 +44,7 @@ class ServerListActivity : BaseActivity() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
         com.v2ray.ang.util.BottomNavHelper.setup(this, binding.bottomNav.root, R.id.nav_servers)
-        com.v2ray.ang.util.BottomNavHelper.enableSwipe(this, binding.root, R.id.nav_servers)
+        swipeDetector = com.v2ray.ang.util.BottomNavHelper.createSwipeDetector(this, R.id.nav_servers)
     }
 
     override fun onResume() {
@@ -140,5 +141,9 @@ private class ResultAdapter(private val onClick: (String) -> Unit) : RecyclerVie
             itemBinding.ivSelected.isVisible = row.isSelected
             itemBinding.root.setOnClickListener { onClick(row.guid) }
         }
+    }
+    override fun dispatchTouchEvent(ev: android.view.MotionEvent): Boolean {
+        swipeDetector.onTouchEvent(ev)
+        return super.dispatchTouchEvent(ev)
     }
 }

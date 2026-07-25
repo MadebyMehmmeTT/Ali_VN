@@ -38,6 +38,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainActivity : HelperBaseActivity() {
+    private lateinit var swipeDetector: android.view.GestureDetector
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
@@ -93,7 +94,7 @@ class MainActivity : HelperBaseActivity() {
 
         setupViewModel()
         com.v2ray.ang.util.BottomNavHelper.setup(this, binding.bottomNav.root, R.id.nav_home)
-        com.v2ray.ang.util.BottomNavHelper.enableSwipe(this, binding.root, R.id.nav_home)
+        swipeDetector = com.v2ray.ang.util.BottomNavHelper.createSwipeDetector(this, R.id.nav_home)
         SubscriptionUpdater.sync()
 
         checkAndRequestPermission(PermissionType.POST_NOTIFICATIONS) {}
@@ -360,4 +361,8 @@ class MainActivity : HelperBaseActivity() {
         return super.onKeyDown(keyCode, event)
     }
 
+    override fun dispatchTouchEvent(ev: android.view.MotionEvent): Boolean {
+        swipeDetector.onTouchEvent(ev)
+        return super.dispatchTouchEvent(ev)
+    }
 }

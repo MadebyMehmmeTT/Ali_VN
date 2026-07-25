@@ -19,11 +19,12 @@ import com.v2ray.ang.util.Utils
 import kotlinx.coroutines.launch
 
 class SettingsActivity : BaseActivity() {
+    private lateinit var swipeDetector: android.view.GestureDetector
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentViewWithToolbar(R.layout.activity_settings, showHomeAsUp = true, title = getString(R.string.title_settings))
         findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottom_nav)?.let { com.v2ray.ang.util.BottomNavHelper.setup(this, it, R.id.nav_settings) }
-        findViewById<android.view.View>(android.R.id.content)?.let { com.v2ray.ang.util.BottomNavHelper.enableSwipe(this, it, R.id.nav_settings) }
+        swipeDetector = com.v2ray.ang.util.BottomNavHelper.createSwipeDetector(this, R.id.nav_settings)
     }
     override fun onResume() { super.onResume(); com.v2ray.ang.util.BottomNavHelper.refresh(this, R.id.bottom_nav, R.id.nav_settings) }
 
@@ -331,6 +332,10 @@ class SettingsActivity : BaseActivity() {
 
     fun onModeHelpClicked(view: View) {
         Utils.openUri(this, AppConfig.APP_WIKI_MODE)
+    }
+    override fun dispatchTouchEvent(ev: android.view.MotionEvent): Boolean {
+        swipeDetector.onTouchEvent(ev)
+        return super.dispatchTouchEvent(ev)
     }
 }
 

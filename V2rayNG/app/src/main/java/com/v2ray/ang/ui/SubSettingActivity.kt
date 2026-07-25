@@ -29,6 +29,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SubSettingActivity : BaseActivity() {
+    private lateinit var swipeDetector: android.view.GestureDetector
     private val binding by lazy { ActivitySubSettingBinding.inflate(layoutInflater) }
     private val ownerActivity: SubSettingActivity
         get() = this
@@ -44,7 +45,7 @@ class SubSettingActivity : BaseActivity() {
 
         setContentViewWithToolbar(binding.root, showHomeAsUp = true, title = getString(R.string.title_sub_setting))
         com.v2ray.ang.util.BottomNavHelper.setup(this, binding.bottomNav.root, R.id.nav_subs)
-        com.v2ray.ang.util.BottomNavHelper.enableSwipe(this, binding.root, R.id.nav_subs)
+        swipeDetector = com.v2ray.ang.util.BottomNavHelper.createSwipeDetector(this, R.id.nav_subs)
 
         adapter = SubSettingRecyclerAdapter(viewModel, ActivityAdapterListener())
 
@@ -167,6 +168,10 @@ class SubSettingActivity : BaseActivity() {
         override fun onRefreshData() {
             refreshData()
         }
+    }
+    override fun dispatchTouchEvent(ev: android.view.MotionEvent): Boolean {
+        swipeDetector.onTouchEvent(ev)
+        return super.dispatchTouchEvent(ev)
     }
 }
 

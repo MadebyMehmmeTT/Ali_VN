@@ -30,6 +30,7 @@ import kotlinx.coroutines.withContext
 import java.io.File
 
 class UserAssetActivity : HelperBaseActivity() {
+    private lateinit var swipeDetector: android.view.GestureDetector
     private val binding by lazy { ActivityUserAssetBinding.inflate(layoutInflater) }
     private val ownerActivity: UserAssetActivity
         get() = this
@@ -42,7 +43,7 @@ class UserAssetActivity : HelperBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentViewWithToolbar(binding.root, showHomeAsUp = true, title = getString(R.string.title_user_asset_setting))
         com.v2ray.ang.util.BottomNavHelper.setup(this, binding.bottomNav.root, R.id.nav_assets)
-        com.v2ray.ang.util.BottomNavHelper.enableSwipe(this, binding.root, R.id.nav_assets)
+        swipeDetector = com.v2ray.ang.util.BottomNavHelper.createSwipeDetector(this, R.id.nav_assets)
 
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -238,5 +239,9 @@ class UserAssetActivity : HelperBaseActivity() {
         override fun onRefreshData() {
             refreshData()
         }
+    }
+    override fun dispatchTouchEvent(ev: android.view.MotionEvent): Boolean {
+        swipeDetector.onTouchEvent(ev)
+        return super.dispatchTouchEvent(ev)
     }
 }

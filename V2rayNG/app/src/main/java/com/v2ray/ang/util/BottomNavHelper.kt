@@ -2,6 +2,7 @@ package com.v2ray.ang.util
 
 import android.app.Activity
 import android.content.Intent
+import android.view.GestureDetector
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.v2ray.ang.R
 import com.v2ray.ang.ui.MainActivity
@@ -42,8 +43,8 @@ object BottomNavHelper {
         activity.findViewById<BottomNavigationView>(viewId)?.selectedItemId = currentId
     }
 
-    fun enableSwipe(activity: Activity, rootView: android.view.View, currentId: Int) {
-        SwipeGestureHelper.attach(rootView, onSwipeLeft = { navigateRelative(activity, currentId, 1) }, onSwipeRight = { navigateRelative(activity, currentId, -1) })
+    fun createSwipeDetector(activity: Activity, currentId: Int): GestureDetector {
+        return SwipeGestureHelper.create(activity, onSwipeLeft = { navigateRelative(activity, currentId, 1) }, onSwipeRight = { navigateRelative(activity, currentId, -1) })
     }
 
     private fun navigateRelative(activity: Activity, currentId: Int, dir: Int) {
