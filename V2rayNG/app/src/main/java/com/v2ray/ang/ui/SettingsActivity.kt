@@ -66,6 +66,12 @@ class SettingsActivity : BaseActivity() {
         private val socksEnableUdp by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_SOCKS_ENABLE_UDP) }
         private val proxySharing by lazy { findPreference<SwitchPreferenceCompat>(AppConfig.PREF_PROXY_SHARING) }
 
+        override fun onViewCreated(view: android.view.View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+            listView?.clipToPadding = false
+            listView?.setPadding(0, 0, 0, (88 * resources.displayMetrics.density).toInt())
+        }
+
         override fun onCreatePreferences(bundle: Bundle?, s: String?) {
 
             preferenceManager.preferenceDataStore = MmkvPreferenceDataStore()
