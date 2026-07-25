@@ -14,6 +14,7 @@
     <color name="home_surface">#33FFFFFF</color>
     <color name="home_surface_stroke">#4DFFFFFF</color>
     <color name="home_brand_teal">#2FE6D8</color>
+    <color name="bottom_nav_indicator">#402FE6D8</color>
     <color name="home_brand_violet">#7C5CFC</color>
     <color name="home_text_primary">#F5F7F7</color>
     <color name="home_text_secondary">#9AA3A6</color>

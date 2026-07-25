@@ -86,6 +86,18 @@
         <item name="colorPrimary">@color/color_fab_active</item>
     </style>
 
+    <style name="ActiveIndicatorStyle" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:width">40dp</item>
+        <item name="android:height">32dp</item>
+        <item name="android:color">@color/bottom_nav_indicator</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.ActiveIndicator</item>
+    </style>
+
+    <style name="ShapeAppearance.ActiveIndicator" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
     <style name="ModernSwitchPreference" parent="Preference.SwitchPreferenceCompat.Material">
         <item name="android:widgetLayout">@layout/preference_material_switch</item>
         <item name="colorPrimary">@color/home_brand_teal</item>
