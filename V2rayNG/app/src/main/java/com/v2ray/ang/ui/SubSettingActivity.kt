@@ -43,6 +43,7 @@ class SubSettingActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         setContentViewWithToolbar(binding.root, showHomeAsUp = true, title = getString(R.string.title_sub_setting))
+        com.v2ray.ang.util.BottomNavHelper.setup(this, binding.bottomNav, R.id.nav_subs)
 
         adapter = SubSettingRecyclerAdapter(viewModel, ActivityAdapterListener())
 

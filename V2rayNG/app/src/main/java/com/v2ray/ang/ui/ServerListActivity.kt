@@ -42,6 +42,7 @@ class ServerListActivity : BaseActivity() {
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
+        com.v2ray.ang.util.BottomNavHelper.setup(this, binding.bottomNav, R.id.nav_servers)
     }
 
     override fun onResume() {

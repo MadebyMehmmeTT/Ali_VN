@@ -2,10 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/per_app_proxy_settings"
+        android:icon="@drawable/ic_per_apps_24dp"
+        android:title="@string/per_app_proxy_settings"
+        app:iconTint="@color/colorWhite"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/retry_servers"
         android:icon="@drawable/ic_cloud_download_24dp"
         android:title="@string/home_menu_retry"
         app:iconTint="@color/colorWhite"
         app:showAsAction="always" />
 </menu>
-
