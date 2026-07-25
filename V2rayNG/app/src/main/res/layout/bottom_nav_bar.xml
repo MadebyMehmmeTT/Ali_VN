@@ -11,4 +11,5 @@
     app:itemTextColor="@color/bottom_nav_item_color"
     app:labelVisibilityMode="labeled"
     app:itemActiveIndicatorStyle="@style/ActiveIndicatorStyle"
+    app:elevation="0dp"
     app:menu="@menu/bottom_nav_menu" />

@@ -93,6 +93,7 @@ class MainActivity : HelperBaseActivity() {
 
         setupViewModel()
         com.v2ray.ang.util.BottomNavHelper.setup(this, binding.bottomNav.root, R.id.nav_home)
+        com.v2ray.ang.util.BottomNavHelper.enableSwipe(this, binding.root, R.id.nav_home)
         SubscriptionUpdater.sync()
 
         checkAndRequestPermission(PermissionType.POST_NOTIFICATIONS) {}

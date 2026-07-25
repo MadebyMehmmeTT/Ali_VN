@@ -42,6 +42,7 @@ class UserAssetActivity : HelperBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentViewWithToolbar(binding.root, showHomeAsUp = true, title = getString(R.string.title_user_asset_setting))
         com.v2ray.ang.util.BottomNavHelper.setup(this, binding.bottomNav.root, R.id.nav_assets)
+        com.v2ray.ang.util.BottomNavHelper.enableSwipe(this, binding.root, R.id.nav_assets)
 
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)

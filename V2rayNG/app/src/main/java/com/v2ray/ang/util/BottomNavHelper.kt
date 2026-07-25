@@ -12,6 +12,8 @@ import com.v2ray.ang.ui.UserAssetActivity
 
 object BottomNavHelper {
 
+    private val order = listOf(R.id.nav_home, R.id.nav_servers, R.id.nav_subs, R.id.nav_assets, R.id.nav_settings)
+
     fun setup(activity: Activity, bottomNav: BottomNavigationView, currentId: Int) {
         bottomNav.selectedItemId = currentId
         bottomNav.setOnItemSelectedListener { item ->
@@ -35,5 +37,31 @@ object BottomNavHelper {
             true
         }
     }
-    fun refresh(activity: Activity, viewId: Int, currentId: Int) { activity.findViewById<BottomNavigationView>(viewId)?.selectedItemId = currentId }
+
+    fun refresh(activity: Activity, viewId: Int, currentId: Int) {
+        activity.findViewById<BottomNavigationView>(viewId)?.selectedItemId = currentId
+    }
+
+    fun enableSwipe(activity: Activity, rootView: android.view.View, currentId: Int) {
+        SwipeGestureHelper.attach(rootView, onSwipeLeft = { navigateRelative(activity, currentId, 1) }, onSwipeRight = { navigateRelative(activity, currentId, -1) })
+    }
+
+    private fun navigateRelative(activity: Activity, currentId: Int, dir: Int) {
+        val idx = order.indexOf(currentId)
+        val newIdx = idx + dir
+        if (newIdx !in order.indices) return
+        val target: Class<*> = when (order[newIdx]) {
+            R.id.nav_home -> MainActivity::class.java
+            R.id.nav_servers -> ServerListActivity::class.java
+            R.id.nav_subs -> SubSettingActivity::class.java
+            R.id.nav_assets -> UserAssetActivity::class.java
+            R.id.nav_settings -> SettingsActivity::class.java
+            else -> return
+        }
+        val intent = Intent(activity, target)
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+        activity.startActivity(intent)
+        if (dir > 0) activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        else activity.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+    }
 }
