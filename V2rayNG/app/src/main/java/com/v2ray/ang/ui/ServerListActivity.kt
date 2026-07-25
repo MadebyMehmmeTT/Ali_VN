@@ -47,6 +47,7 @@ class ServerListActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
+        binding.bottomNav.root.selectedItemId = R.id.nav_servers
         ContextCompat.registerReceiver(
             this,
             mReceiver,

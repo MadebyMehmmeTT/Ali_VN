@@ -58,6 +58,7 @@ class SubSettingActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
+        binding.bottomNav.root.selectedItemId = R.id.nav_subs
         refreshData()
     }
 

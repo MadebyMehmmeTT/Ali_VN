@@ -35,4 +35,5 @@ object BottomNavHelper {
             true
         }
     }
+    fun refresh(activity: Activity, viewId: Int, currentId: Int) { activity.findViewById<BottomNavigationView>(viewId)?.selectedItemId = currentId }
 }

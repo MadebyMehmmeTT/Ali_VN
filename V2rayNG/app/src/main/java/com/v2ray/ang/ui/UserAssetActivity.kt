@@ -57,6 +57,7 @@ class UserAssetActivity : HelperBaseActivity() {
 
     override fun onResume() {
         super.onResume()
+        binding.bottomNav.root.selectedItemId = R.id.nav_assets
         refreshData()
     }
 
