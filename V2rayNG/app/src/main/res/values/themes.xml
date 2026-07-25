@@ -86,5 +86,10 @@
         <item name="colorPrimary">@color/color_fab_active</item>
     </style>
 
+    <style name="ModernSwitchPreference" parent="Preference.SwitchPreferenceCompat.Material">
+        <item name="android:widgetLayout">@layout/preference_material_switch</item>
+        <item name="colorPrimary">@color/home_brand_teal</item>
+    </style>
+
 </resources>
 
