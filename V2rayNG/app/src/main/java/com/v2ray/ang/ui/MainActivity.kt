@@ -80,7 +80,6 @@ class MainActivity : HelperBaseActivity() {
         setContentView(binding.root)
         setupToolbar(binding.toolbar, false, getString(R.string.app_name))
 
-        setupNavigationDrawer()
 
         binding.cardLocation.setOnClickListener {
             selectServerLauncher.launch(Intent(this, ServerListActivity::class.java))
@@ -93,7 +92,7 @@ class MainActivity : HelperBaseActivity() {
         }
 
         setupViewModel()
-        com.v2ray.ang.util.BottomNavHelper.setup(this, binding.bottomNav, R.id.nav_home)
+        com.v2ray.ang.util.BottomNavHelper.setup(this, binding.bottomNav.root, R.id.nav_home)
         SubscriptionUpdater.sync()
 
         checkAndRequestPermission(PermissionType.POST_NOTIFICATIONS) {}
@@ -359,3 +358,4 @@ class MainActivity : HelperBaseActivity() {
         return super.onKeyDown(keyCode, event)
     }
 
+}
