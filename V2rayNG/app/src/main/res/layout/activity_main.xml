@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/home_background"
     android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -35,7 +39,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingHorizontal="@dimen/padding_spacing_dp16">
+        android:paddingHorizontal="@dimen/padding_spacing_dp16"
+        android:paddingBottom="88dp"
+        android:clipToPadding="false">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_location"
@@ -239,7 +245,8 @@
         </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
-    <include android:id="@+id/bottom_nav" layout="@layout/bottom_nav_bar" />
+    <include android:id="@+id/bottom_nav" layout="@layout/bottom_nav_bar" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_gravity="bottom" />
 
-</LinearLayout>
+</FrameLayout>
