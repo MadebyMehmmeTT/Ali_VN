@@ -24,8 +24,16 @@ object AutoConnectManager {
         val existing = subscriptions.find { it.subscription.url == subUrl }
 
         val guid = if (existing != null) {
+            var needsUpdate = false
             if (!existing.subscription.enabled) {
                 existing.subscription.enabled = true
+                needsUpdate = true
+            }
+            if (!existing.subscription.isHiddenSystem) {
+                existing.subscription.isHiddenSystem = true
+                needsUpdate = true
+            }
+            if (needsUpdate) {
                 MmkvManager.encodeSubscription(existing.guid, existing.subscription)
             }
             existing.guid
@@ -36,6 +44,7 @@ object AutoConnectManager {
                 enabled = true
                 autoUpdate = true
                 updateInterval = 60
+                isHiddenSystem = true
             }
             MmkvManager.encodeSubscription("", subItem)
             val updatedSubs = MmkvManager.decodeSubscriptions()

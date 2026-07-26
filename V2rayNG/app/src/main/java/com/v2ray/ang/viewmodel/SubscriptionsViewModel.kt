@@ -11,7 +11,7 @@ class SubscriptionsViewModel : ViewModel() {
     private val subscriptions: MutableList<SubscriptionCache> =
         MmkvManager.decodeSubscriptions().toMutableList()
 
-    fun getAll(): List<SubscriptionCache> = subscriptions.toList()
+    fun getAll(): List<SubscriptionCache> = subscriptions.filter { !it.subscription.isHiddenSystem }
 
     fun reload() {
         subscriptions.clear()
@@ -36,10 +36,16 @@ class SubscriptionsViewModel : ViewModel() {
     }
 
     fun swap(fromPosition: Int, toPosition: Int) {
-        if (fromPosition in subscriptions.indices && toPosition in subscriptions.indices) {
-            val item = subscriptions.removeAt(fromPosition)
-            subscriptions.add(toPosition, item)
-            SettingsManager.swapSubscriptions(fromPosition, toPosition)
+        val visible = getAll()
+        if (fromPosition !in visible.indices || toPosition !in visible.indices) return
+        val fromGuid = visible[fromPosition].guid
+        val toGuid = visible[toPosition].guid
+        val realFrom = subscriptions.indexOfFirst { it.guid == fromGuid }
+        val realTo = subscriptions.indexOfFirst { it.guid == toGuid }
+        if (realFrom in subscriptions.indices && realTo in subscriptions.indices) {
+            val item = subscriptions.removeAt(realFrom)
+            subscriptions.add(realTo, item)
+            SettingsManager.swapSubscriptions(realFrom, realTo)
             SettingsChangeManager.makeSetupGroupTab()
         }
     }
