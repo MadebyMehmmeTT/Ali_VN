@@ -8,7 +8,8 @@
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
-    app:cardBackgroundColor="@color/home_surface"
+    app:cardBackgroundColor="@android:color/transparent"
+    android:background="@drawable/bg_server_item_glass"
     app:cardCornerRadius="14dp"
     app:cardElevation="0dp">
 
