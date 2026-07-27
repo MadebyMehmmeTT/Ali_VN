@@ -26,11 +26,18 @@ fun Context.toast(message: CharSequence) {
 }
 
 fun Context.toastSuccess(message: Int) {
-    Toasty.success(this, message, Toast.LENGTH_SHORT, true).show()
+    toastSuccess(getString(message))
 }
 
 fun Context.toastSuccess(message: CharSequence) {
-    Toasty.success(this, message, Toast.LENGTH_SHORT, true).show()
+    val inflater = android.view.LayoutInflater.from(this)
+    val layout = inflater.inflate(com.v2ray.ang.R.layout.toast_success, null)
+    layout.findViewById<android.widget.TextView>(com.v2ray.ang.R.id.tv_toast_message).text = message
+    val toast = Toast(this)
+    toast.duration = Toast.LENGTH_SHORT
+    toast.view = layout
+    toast.setGravity(android.view.Gravity.BOTTOM, 0, 300)
+    toast.show()
 }
 
 fun Context.toastError(message: Int) {
