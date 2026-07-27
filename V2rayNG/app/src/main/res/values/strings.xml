@@ -65,7 +65,7 @@
     <string name="notification_action_more">Click for more</string>
     <string name="toast_services_start">Start Services</string>
     <string name="toast_services_stop">Stop Services</string>
-    <string name="toast_services_success">Start Services Success</string>
+    <string name="toast_services_success">Start Service Success ✅</string>
     <string name="toast_services_failure">Start Services Failure</string>
 
     

@@ -132,13 +132,19 @@
 
                 <TextView
                     android:id="@+id/tv_connect_label"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="@string/home_connect"
                     android:textColor="@color/home_text_primary"
                     android:textSize="26sp"
                     android:textStyle="bold"
-                    android:letterSpacing="0.02" />
+                    android:letterSpacing="0.02"
+                    android:maxLines="1"
+                    android:autoSizeTextType="uniform"
+                    android:autoSizeMinTextSize="12sp"
+                    android:autoSizeMaxTextSize="26sp"
+                    android:autoSizeStepGranularity="1sp" />
 
                 <TextView
                     android:id="@+id/tv_connect_sub"
