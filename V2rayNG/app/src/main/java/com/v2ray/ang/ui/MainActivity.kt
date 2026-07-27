@@ -228,11 +228,11 @@ class MainActivity : HelperBaseActivity() {
         val profile = MmkvManager.decodeServerConfig(guid)
         val (flag, name) = CountryUtils.countryFromRemarks(profile?.remarks)
         binding.tvLocationFlag.text = flag ?: CountryUtils.UNKNOWN_FLAG
-        binding.tvLocationName.text = name ?: getString(R.string.home_unknown_location)
+        binding.tvLocationName.text = name ?: profile?.remarks?.takeIf { it.isNotBlank() } ?: getString(R.string.home_unknown_location)
 
         binding.tvStatusIcon.text = getString(R.string.home_icon_connected)
         binding.tvStatusTitle.text = getString(R.string.home_connected_title)
-        binding.tvStatusSubtitle.text = name ?: getString(R.string.home_unknown_location)
+        binding.tvStatusSubtitle.text = name ?: profile?.remarks?.takeIf { it.isNotBlank() } ?: getString(R.string.home_unknown_location)
         binding.tvStatusCount.text = getString(R.string.home_ping_ms, delayMillis)
     }
 
@@ -283,7 +283,7 @@ class MainActivity : HelperBaseActivity() {
         if (profile != null) {
             val (flag, name) = CountryUtils.countryFromRemarks(profile.remarks)
             binding.tvLocationFlag.text = flag ?: CountryUtils.UNKNOWN_FLAG
-            binding.tvLocationName.text = name ?: getString(R.string.home_unknown_location)
+            binding.tvLocationName.text = name ?: profile.remarks.takeIf { it.isNotBlank() } ?: getString(R.string.home_unknown_location)
         } else {
             binding.tvLocationFlag.text = "🌐"
             binding.tvLocationName.text = getString(R.string.home_choose_location)

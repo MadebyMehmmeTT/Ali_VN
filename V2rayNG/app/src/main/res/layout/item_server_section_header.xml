@@ -4,17 +4,33 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tv_section_title"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingHorizontal="@dimen/padding_spacing_dp16"
         android:paddingTop="@dimen/padding_spacing_dp16"
-        android:paddingBottom="@dimen/padding_spacing_dp8"
-        android:textColor="@color/home_text_secondary"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        android:textAllCaps="true"
-        tools:text="Default" />
+        android:paddingBottom="@dimen/padding_spacing_dp8">
+
+        <TextView
+            android:id="@+id/tv_section_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/home_text_secondary"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            tools:text="Default" />
+
+        <ImageView
+            android:id="@+id/iv_section_ping"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:contentDescription="@string/home_test_ping"
+            android:src="@drawable/ic_ping_test" />
+
+    </LinearLayout>
 
 </FrameLayout>

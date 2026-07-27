@@ -5,11 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -32,10 +29,13 @@ class ServerListActivity : BaseActivity() {
     private lateinit var layoutManager: LinearLayoutManager
 
     private val binding by lazy { ActivityServerListBinding.inflate(layoutInflater) }
-    private val adapter = ResultAdapter { guid ->
-        setResult(RESULT_OK, Intent().putExtra(EXTRA_SELECTED_GUID, guid))
-        finish()
-    }
+    private val adapter = ResultAdapter(
+        onClick = { guid ->
+            setResult(RESULT_OK, Intent().putExtra(EXTRA_SELECTED_GUID, guid))
+            finish()
+        },
+        onPingClick = { subId -> testSubscriptionPing(subId) }
+    )
 
     private val mReceiver = object : BroadcastReceiver() {
         override fun onReceive(ctx: Context?, intent: Intent?) {
@@ -122,40 +122,18 @@ class ServerListActivity : BaseActivity() {
         val chipMarginEnd = (8 * density).toInt()
         val paddingH = (14 * density).toInt()
         val paddingV = (8 * density).toInt()
-        val iconMarginStart = (8 * density).toInt()
-        val iconSize = (18 * density).toInt()
 
         headers.forEach { (position, header) ->
-            val chip = LinearLayout(this).apply {
-                orientation = LinearLayout.HORIZONTAL
-                gravity = Gravity.CENTER_VERTICAL
-                setPadding(paddingH, paddingV, paddingH, paddingV)
-                setBackgroundResource(R.drawable.bg_server_item_glass)
-            }
-
-            val titleView = TextView(this).apply {
+            val chip = TextView(this).apply {
                 text = header.title
                 textSize = 13f
                 setTextColor(ContextCompat.getColor(context, R.color.home_text_primary))
+                setPadding(paddingH, paddingV, paddingH, paddingV)
+                setBackgroundResource(R.drawable.bg_server_item_glass)
                 setOnClickListener {
                     layoutManager.scrollToPositionWithOffset(position, 0)
                 }
             }
-
-            val pingIcon = ImageView(this).apply {
-                setImageResource(R.drawable.ic_ping_test)
-                contentDescription = getString(R.string.home_test_ping)
-                layoutParams = LinearLayout.LayoutParams(iconSize, iconSize).apply {
-                    marginStart = iconMarginStart
-                }
-                setOnClickListener {
-                    testSubscriptionPing(header.subId)
-                }
-            }
-
-            chip.addView(titleView)
-            chip.addView(pingIcon)
-
             val params = ViewGroup.MarginLayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
@@ -225,7 +203,10 @@ private data class ResultRow(
     val isSelected: Boolean
 )
 
-private class ResultAdapter(private val onClick: (String) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+private class ResultAdapter(
+    private val onClick: (String) -> Unit,
+    private val onPingClick: (String) -> Unit
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val items = mutableListOf<ListItem>()
 
@@ -252,7 +233,7 @@ private class ResultAdapter(private val onClick: (String) -> Unit) : RecyclerVie
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = items[position]) {
-            is ListItem.Header -> (holder as HeaderViewHolder).bind(item)
+            is ListItem.Header -> (holder as HeaderViewHolder).bind(item, onPingClick)
             is ListItem.Server -> (holder as ServerViewHolder).bind(item.row, onClick)
         }
     }
@@ -265,8 +246,9 @@ private class ResultAdapter(private val onClick: (String) -> Unit) : RecyclerVie
     }
 
     class HeaderViewHolder(private val binding: ItemServerSectionHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ListItem.Header) {
+        fun bind(item: ListItem.Header, onPingClick: (String) -> Unit) {
             binding.tvSectionTitle.text = item.title
+            binding.ivSectionPing.setOnClickListener { onPingClick(item.subId) }
         }
     }
 
