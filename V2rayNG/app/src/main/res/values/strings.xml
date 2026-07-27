@@ -33,6 +33,7 @@
     <string name="home_menu_retry">Retry</string>
     <string name="server_list_title">Select location</string>
     <string name="server_list_default_section">Default</string>
+    <string name="home_test_ping">Test ping</string>
     <string name="server_list_empty">No results yet. Please wait while servers are tested…</string>
     <string name="home_telegram_prompt_message">Please join our Telegram channel for updates.</string>
     <string name="home_telegram_prompt_join">Join</string>

@@ -5,8 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -17,9 +20,11 @@ import com.v2ray.ang.R
 import com.v2ray.ang.databinding.ActivityServerListBinding
 import com.v2ray.ang.databinding.ItemServerResultBinding
 import com.v2ray.ang.databinding.ItemServerSectionHeaderBinding
+import com.v2ray.ang.dto.TestServiceMessage
 import com.v2ray.ang.handler.AutoConnectManager
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.util.CountryUtils
+import com.v2ray.ang.util.MessageUtil
 import com.v2ray.ang.util.Utils
 
 class ServerListActivity : BaseActivity() {
@@ -74,44 +79,83 @@ class ServerListActivity : BaseActivity() {
             val delay = MmkvManager.decodeServerAffiliationInfo(guid)?.testDelayMillis ?: 0L
             val profile = MmkvManager.decodeServerConfig(guid) ?: return@mapNotNull null
             val (flag, name) = CountryUtils.countryFromRemarks(profile.remarks)
+            val displayName = name ?: profile.remarks.ifBlank { null }
             ResultRow(
                 guid = guid,
                 flag = flag ?: CountryUtils.UNKNOWN_FLAG,
-                countryName = name,
+                countryName = displayName,
                 delayMillis = delay,
                 isSelected = guid == selected
             )
         }.sortedBy { if (it.delayMillis <= 0L) Long.MAX_VALUE else it.delayMillis }
     }
 
+    private fun testSubscriptionPing(subId: String) {
+        val guids = MmkvManager.decodeServerList(subId)
+        if (guids.isEmpty()) return
+        MessageUtil.sendMsg2TestService(
+            this,
+            TestServiceMessage(key = AppConfig.MSG_MEASURE_CONFIG_CANCEL)
+        )
+        MmkvManager.clearAllTestDelayResults(guids)
+        adapter.notifyDataSetChanged()
+        MessageUtil.sendMsg2TestService(
+            this,
+            TestServiceMessage(key = AppConfig.MSG_MEASURE_CONFIG_START, subscriptionId = subId)
+        )
+    }
+
     private fun setupSectionTabs(listItems: List<ListItem>) {
-        val headerPositions = listItems.withIndex()
+        val headers = listItems.withIndex()
             .filter { it.value is ListItem.Header }
-            .map { it.index to (it.value as ListItem.Header).title }
+            .map { it.index to (it.value as ListItem.Header) }
 
         binding.sectionTabsContainer.removeAllViews()
 
-        if (headerPositions.size < 2) {
+        if (headers.size < 2) {
             binding.sectionTabsScroll.isVisible = false
             return
         }
 
         binding.sectionTabsScroll.isVisible = true
-        val chipMarginEnd = (8 * resources.displayMetrics.density).toInt()
-        val paddingH = (14 * resources.displayMetrics.density).toInt()
-        val paddingV = (8 * resources.displayMetrics.density).toInt()
+        val density = resources.displayMetrics.density
+        val chipMarginEnd = (8 * density).toInt()
+        val paddingH = (14 * density).toInt()
+        val paddingV = (8 * density).toInt()
+        val iconMarginStart = (8 * density).toInt()
+        val iconSize = (18 * density).toInt()
 
-        headerPositions.forEach { (position, title) ->
-            val chip = TextView(this).apply {
-                text = title
-                textSize = 13f
-                setTextColor(ContextCompat.getColor(context, R.color.home_text_primary))
+        headers.forEach { (position, header) ->
+            val chip = LinearLayout(this).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = Gravity.CENTER_VERTICAL
                 setPadding(paddingH, paddingV, paddingH, paddingV)
                 setBackgroundResource(R.drawable.bg_server_item_glass)
+            }
+
+            val titleView = TextView(this).apply {
+                text = header.title
+                textSize = 13f
+                setTextColor(ContextCompat.getColor(context, R.color.home_text_primary))
                 setOnClickListener {
                     layoutManager.scrollToPositionWithOffset(position, 0)
                 }
             }
+
+            val pingIcon = ImageView(this).apply {
+                setImageResource(R.drawable.ic_ping_test)
+                contentDescription = getString(R.string.home_test_ping)
+                layoutParams = LinearLayout.LayoutParams(iconSize, iconSize).apply {
+                    marginStart = iconMarginStart
+                }
+                setOnClickListener {
+                    testSubscriptionPing(header.subId)
+                }
+            }
+
+            chip.addView(titleView)
+            chip.addView(pingIcon)
+
             val params = ViewGroup.MarginLayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
@@ -135,7 +179,7 @@ class ServerListActivity : BaseActivity() {
         val panelSubId = AutoConnectManager.ensureSubscription()
         val panelRows = buildRows(panelSubId, selected)
         if (panelRows.isNotEmpty()) {
-            listItems.add(ListItem.Header(getString(R.string.server_list_default_section)))
+            listItems.add(ListItem.Header(getString(R.string.server_list_default_section), panelSubId))
             listItems.addAll(panelRows.map { ListItem.Server(it) })
         }
 
@@ -148,7 +192,7 @@ class ServerListActivity : BaseActivity() {
             val rows = buildRows(sub.guid, selected)
             if (rows.isNotEmpty()) {
                 val title = sub.subscription.remarks.ifBlank { sub.guid }
-                listItems.add(ListItem.Header(title))
+                listItems.add(ListItem.Header(title, sub.guid))
                 listItems.addAll(rows.map { ListItem.Server(it) })
             }
         }
@@ -169,7 +213,7 @@ class ServerListActivity : BaseActivity() {
 }
 
 private sealed class ListItem {
-    data class Header(val title: String) : ListItem()
+    data class Header(val title: String, val subId: String) : ListItem()
     data class Server(val row: ResultRow) : ListItem()
 }
 
