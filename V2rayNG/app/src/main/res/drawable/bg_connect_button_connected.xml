@@ -2,29 +2,43 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="oval">
-            <solid android:color="#2609CBB0" />
+            <solid android:color="#1A09CBB0" />
         </shape>
     </item>
     <item
-        android:left="14dp"
-        android:top="14dp"
-        android:right="14dp"
-        android:bottom="14dp">
+        android:left="10dp"
+        android:top="10dp"
+        android:right="10dp"
+        android:bottom="10dp">
         <shape android:shape="oval">
-            <solid android:color="#4009CBB0" />
+            <solid android:color="#2E09CBB0" />
         </shape>
     </item>
     <item
-        android:left="28dp"
-        android:top="28dp"
-        android:right="28dp"
-        android:bottom="28dp">
+        android:left="22dp"
+        android:top="22dp"
+        android:right="22dp"
+        android:bottom="22dp">
         <shape android:shape="oval">
-            <solid android:color="#12201D" />
+            <solid android:color="#4D09CBB0" />
+        </shape>
+    </item>
+    <item
+        android:left="34dp"
+        android:top="34dp"
+        android:right="34dp"
+        android:bottom="34dp">
+        <shape android:shape="oval">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="76dp"
+                android:centerX="0.5"
+                android:centerY="0.42"
+                android:startColor="#1F2E2B"
+                android:endColor="#0B1614" />
             <stroke
-                android:width="1.5dp"
-                android:color="#33E6D8" />
+                android:width="2dp"
+                android:color="#4FF2E6" />
         </shape>
     </item>
 </layer-list>
-

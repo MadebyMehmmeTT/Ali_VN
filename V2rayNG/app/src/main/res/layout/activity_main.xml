@@ -123,6 +123,12 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:orientation="vertical">
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/ic_power"
+                    android:contentDescription="@null" />
 
                 <TextView
                     android:id="@+id/tv_connect_label"
@@ -130,8 +136,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/home_connect"
                     android:textColor="@color/home_text_primary"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.02" />
 
                 <TextView
                     android:id="@+id/tv_connect_sub"
@@ -139,7 +146,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/home_text_secondary"
-                    android:textSize="13sp"
+                    android:textSize="15sp"
                     tools:text="182 ms" />
 
             </LinearLayout>
