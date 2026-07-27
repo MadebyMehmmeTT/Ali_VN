@@ -25,6 +25,7 @@
     <string name="home_idle_subtitle">برای شروع، دکمه اتصال را بزنید</string>
     <string name="home_menu_retry">تلاش مجدد</string>
     <string name="server_list_title">انتخاب لوکیشن</string>
+    <string name="server_list_default_section">پیش‌فرض</string>
     <string name="server_list_empty">هنوز نتیجه‌ای نیست. لطفاً صبر کنید تا سرورها تست شوند…</string>
     <string name="home_telegram_prompt_message">لطفاً برای آپدیت‌ها در کانال تلگرام ما عضو شوید.</string>
     <string name="home_telegram_prompt_join">عضویت</string>

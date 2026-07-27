@@ -15,6 +15,7 @@ import com.v2ray.ang.AppConfig
 import com.v2ray.ang.R
 import com.v2ray.ang.databinding.ActivityServerListBinding
 import com.v2ray.ang.databinding.ItemServerResultBinding
+import com.v2ray.ang.databinding.ItemServerSectionHeaderBinding
 import com.v2ray.ang.handler.AutoConnectManager
 import com.v2ray.ang.handler.MmkvManager
 import com.v2ray.ang.util.CountryUtils
@@ -64,19 +65,9 @@ class ServerListActivity : BaseActivity() {
         runCatching { unregisterReceiver(mReceiver) }
     }
 
-    private fun reload() {
-        if (!AutoConnectManager.isPanelConfigured()) {
-            binding.emptyState.text = getString(R.string.server_list_empty)
-            binding.emptyState.isVisible = true
-            binding.recyclerView.isVisible = false
-            return
-        }
-
-        val subId = AutoConnectManager.ensureSubscription()
+    private fun buildRows(subId: String, selected: String?): List<ResultRow> {
         val guids = MmkvManager.decodeServerList(subId)
-        val selected = MmkvManager.getSelectServer()
-
-        val rows = guids.mapNotNull { guid ->
+        return guids.mapNotNull { guid ->
             val delay = MmkvManager.decodeServerAffiliationInfo(guid)?.testDelayMillis ?: 0L
             val profile = MmkvManager.decodeServerConfig(guid) ?: return@mapNotNull null
             val (flag, name) = CountryUtils.countryFromRemarks(profile.remarks)
@@ -88,10 +79,43 @@ class ServerListActivity : BaseActivity() {
                 isSelected = guid == selected
             )
         }.sortedBy { if (it.delayMillis <= 0L) Long.MAX_VALUE else it.delayMillis }
+    }
 
-        adapter.submitList(rows)
-        binding.emptyState.isVisible = rows.isEmpty()
-        binding.recyclerView.isVisible = rows.isNotEmpty()
+    private fun reload() {
+        if (!AutoConnectManager.isPanelConfigured()) {
+            binding.emptyState.text = getString(R.string.server_list_empty)
+            binding.emptyState.isVisible = true
+            binding.recyclerView.isVisible = false
+            return
+        }
+
+        val selected = MmkvManager.getSelectServer()
+        val listItems = mutableListOf<ListItem>()
+
+        val panelSubId = AutoConnectManager.ensureSubscription()
+        val panelRows = buildRows(panelSubId, selected)
+        if (panelRows.isNotEmpty()) {
+            listItems.add(ListItem.Header(getString(R.string.server_list_default_section)))
+            listItems.addAll(panelRows.map { ListItem.Server(it) })
+        }
+
+        val userSubs = MmkvManager.decodeSubscriptions().filter {
+            it.guid != panelSubId && !it.subscription.isHiddenSystem &&
+                it.subscription.enabled && it.subscription.url.isNotBlank()
+        }
+
+        userSubs.forEach { sub ->
+            val rows = buildRows(sub.guid, selected)
+            if (rows.isNotEmpty()) {
+                val title = sub.subscription.remarks.ifBlank { sub.guid }
+                listItems.add(ListItem.Header(title))
+                listItems.addAll(rows.map { ListItem.Server(it) })
+            }
+        }
+
+        adapter.submitList(listItems)
+        binding.emptyState.isVisible = listItems.isEmpty()
+        binding.recyclerView.isVisible = listItems.isNotEmpty()
     }
 
     companion object {
@@ -103,6 +127,11 @@ class ServerListActivity : BaseActivity() {
     }
 }
 
+private sealed class ListItem {
+    data class Header(val title: String) : ListItem()
+    data class Server(val row: ResultRow) : ListItem()
+}
+
 private data class ResultRow(
     val guid: String,
     val flag: String,
@@ -111,26 +140,52 @@ private data class ResultRow(
     val isSelected: Boolean
 )
 
-private class ResultAdapter(private val onClick: (String) -> Unit) : RecyclerView.Adapter<ResultAdapter.ViewHolder>() {
+private class ResultAdapter(private val onClick: (String) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val items = mutableListOf<ResultRow>()
+    private val items = mutableListOf<ListItem>()
 
-    fun submitList(newItems: List<ResultRow>) {
+    fun submitList(newItems: List<ListItem>) {
         items.clear()
         items.addAll(newItems)
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemBinding = ItemServerResultBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(itemBinding)
+    override fun getItemViewType(position: Int): Int = when (items[position]) {
+        is ListItem.Header -> VIEW_TYPE_HEADER
+        is ListItem.Server -> VIEW_TYPE_SERVER
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(items[position], onClick)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == VIEW_TYPE_HEADER) {
+            val headerBinding = ItemServerSectionHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            HeaderViewHolder(headerBinding)
+        } else {
+            val itemBinding = ItemServerResultBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ServerViewHolder(itemBinding)
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (val item = items[position]) {
+            is ListItem.Header -> (holder as HeaderViewHolder).bind(item)
+            is ListItem.Server -> (holder as ServerViewHolder).bind(item.row, onClick)
+        }
+    }
 
     override fun getItemCount() = items.size
 
-    class ViewHolder(private val itemBinding: ItemServerResultBinding) : RecyclerView.ViewHolder(itemBinding.root) {
+    companion object {
+        private const val VIEW_TYPE_HEADER = 0
+        private const val VIEW_TYPE_SERVER = 1
+    }
+
+    class HeaderViewHolder(private val binding: ItemServerSectionHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: ListItem.Header) {
+            binding.tvSectionTitle.text = item.title
+        }
+    }
+
+    class ServerViewHolder(private val itemBinding: ItemServerResultBinding) : RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(row: ResultRow, onClick: (String) -> Unit) {
             val context = itemBinding.root.context
             itemBinding.tvFlag.text = row.flag

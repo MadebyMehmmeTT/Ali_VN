@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_section_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/padding_spacing_dp16"
+        android:paddingTop="@dimen/padding_spacing_dp16"
+        android:paddingBottom="@dimen/padding_spacing_dp8"
+        android:textColor="@color/home_text_secondary"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        tools:text="Default" />
+
+</FrameLayout>
