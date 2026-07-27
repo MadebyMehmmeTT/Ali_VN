@@ -7,6 +7,7 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +24,7 @@ import com.v2ray.ang.util.Utils
 
 class ServerListActivity : BaseActivity() {
     private lateinit var swipeDetector: android.view.GestureDetector
+    private lateinit var layoutManager: LinearLayoutManager
 
     private val binding by lazy { ActivityServerListBinding.inflate(layoutInflater) }
     private val adapter = ResultAdapter { guid ->
@@ -42,7 +44,8 @@ class ServerListActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentViewWithToolbar(binding.root, showHomeAsUp = true, title = getString(R.string.server_list_title))
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = adapter
         com.v2ray.ang.util.BottomNavHelper.setup(this, binding.bottomNav.root, R.id.nav_servers)
         swipeDetector = com.v2ray.ang.util.BottomNavHelper.createSwipeDetector(this, R.id.nav_servers)
@@ -81,11 +84,48 @@ class ServerListActivity : BaseActivity() {
         }.sortedBy { if (it.delayMillis <= 0L) Long.MAX_VALUE else it.delayMillis }
     }
 
+    private fun setupSectionTabs(listItems: List<ListItem>) {
+        val headerPositions = listItems.withIndex()
+            .filter { it.value is ListItem.Header }
+            .map { it.index to (it.value as ListItem.Header).title }
+
+        binding.sectionTabsContainer.removeAllViews()
+
+        if (headerPositions.size < 2) {
+            binding.sectionTabsScroll.isVisible = false
+            return
+        }
+
+        binding.sectionTabsScroll.isVisible = true
+        val chipMarginEnd = (8 * resources.displayMetrics.density).toInt()
+        val paddingH = (14 * resources.displayMetrics.density).toInt()
+        val paddingV = (8 * resources.displayMetrics.density).toInt()
+
+        headerPositions.forEach { (position, title) ->
+            val chip = TextView(this).apply {
+                text = title
+                textSize = 13f
+                setTextColor(ContextCompat.getColor(context, R.color.home_text_primary))
+                setPadding(paddingH, paddingV, paddingH, paddingV)
+                setBackgroundResource(R.drawable.bg_server_item_glass)
+                setOnClickListener {
+                    layoutManager.scrollToPositionWithOffset(position, 0)
+                }
+            }
+            val params = ViewGroup.MarginLayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            ).apply { marginEnd = chipMarginEnd }
+            binding.sectionTabsContainer.addView(chip, params)
+        }
+    }
+
     private fun reload() {
         if (!AutoConnectManager.isPanelConfigured()) {
             binding.emptyState.text = getString(R.string.server_list_empty)
             binding.emptyState.isVisible = true
             binding.recyclerView.isVisible = false
+            binding.sectionTabsScroll.isVisible = false
             return
         }
 
@@ -114,6 +154,7 @@ class ServerListActivity : BaseActivity() {
         }
 
         adapter.submitList(listItems)
+        setupSectionTabs(listItems)
         binding.emptyState.isVisible = listItems.isEmpty()
         binding.recyclerView.isVisible = listItems.isNotEmpty()
     }
