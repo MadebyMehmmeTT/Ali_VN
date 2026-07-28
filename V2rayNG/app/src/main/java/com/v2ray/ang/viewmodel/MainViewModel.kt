@@ -226,6 +226,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     
+    fun syncRunningState() {
+        val actuallyRunning = com.v2ray.ang.core.CoreServiceManager.isRunning()
+        if (isRunning.value != actuallyRunning) {
+            isRunning.value = actuallyRunning
+        } else if (actuallyRunning) {
+            refreshConnectedState()
+        }
+    }
+
     fun refreshConnectedState() {
         val guid = MmkvManager.getSelectServer()
         if (guid.isNullOrEmpty()) return

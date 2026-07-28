@@ -69,7 +69,7 @@ class SettingsActivity : BaseActivity() {
         override fun onViewCreated(view: android.view.View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
             listView?.clipToPadding = false
-            listView?.setPadding(0, 0, 0, (88 * resources.displayMetrics.density).toInt())
+            listView?.setPadding(0, (56 * resources.displayMetrics.density).toInt(), 0, (88 * resources.displayMetrics.density).toInt())
         }
 
         override fun onCreatePreferences(bundle: Bundle?, s: String?) {

@@ -100,7 +100,7 @@ class MainActivity : HelperBaseActivity() {
         checkAndRequestPermission(PermissionType.POST_NOTIFICATIONS) {}
         checkMaintenanceMode()
     }
-    override fun onResume() { super.onResume(); binding.bottomNav.root.selectedItemId = R.id.nav_home }
+    override fun onResume() { super.onResume(); binding.bottomNav.root.selectedItemId = R.id.nav_home; mainViewModel.syncRunningState() }
 
     
 
