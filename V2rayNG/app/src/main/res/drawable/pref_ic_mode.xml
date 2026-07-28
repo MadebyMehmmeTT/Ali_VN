@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#6162D8" />
+            <solid android:color="#E24C4C" />
             <corners android:radius="10dp" />
             <size android:width="34dp" android:height="34dp" />
         </shape>
@@ -11,5 +11,5 @@
         android:width="18dp"
         android:height="18dp"
         android:gravity="center"
-        android:drawable="@drawable/pref_glyph_swap" />
+        android:drawable="@drawable/pref_glyph_mode" />
 </layer-list>
