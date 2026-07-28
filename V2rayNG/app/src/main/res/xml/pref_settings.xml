@@ -5,30 +5,35 @@
     <PreferenceCategory android:title="@string/title_ui_settings">
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
+            android:icon="@drawable/pref_ic_speed_enabled"
             android:key="pref_speed_enabled"
             android:summary="@string/summary_pref_speed_enabled"
             android:title="@string/title_pref_speed_enabled" />
 
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
+            android:icon="@drawable/pref_ic_confirm_remove"
             android:key="pref_confirm_remove"
             android:summary="@string/summary_pref_confirm_remove"
             android:title="@string/title_pref_confirm_remove" />
 
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
+            android:icon="@drawable/pref_ic_start_scan_immediate"
             android:key="pref_start_scan_immediate"
             android:summary="@string/summary_pref_start_scan_immediate"
             android:title="@string/title_pref_start_scan_immediate" />
 
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
+            android:icon="@drawable/pref_ic_double_column_display"
             android:key="pref_double_column_display"
             android:summary="@string/summary_pref_double_column_display"
             android:title="@string/title_pref_double_column_display" />
 
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
+            android:icon="@drawable/pref_ic_group_all_display"
             android:key="pref_group_all_display"
             android:summary="@string/summary_pref_group_all_display"
             android:title="@string/title_pref_group_all_display" />
@@ -37,6 +42,7 @@
             android:defaultValue="auto"
             android:entries="@array/language_select"
             android:entryValues="@array/language_select_value"
+            android:icon="@drawable/pref_ic_language"
             android:key="pref_language"
             android:summary="%s"
             android:title="@string/title_language" />
@@ -45,6 +51,7 @@
             android:defaultValue="0"
             android:entries="@array/ui_mode_night"
             android:entryValues="@array/ui_mode_night_value"
+            android:icon="@drawable/pref_ic_ui_mode_night"
             android:key="pref_ui_mode_night"
             android:summary="%s"
             android:title="@string/title_pref_ui_mode_night" />
@@ -54,35 +61,41 @@
     <PreferenceCategory android:title="@string/title_vpn_settings">
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
+            android:icon="@drawable/pref_ic_ipv6_enabled"
             android:key="pref_ipv6_enabled"
             android:summary="@string/summary_pref_ipv6_enabled"
             android:title="@string/title_pref_ipv6_enabled" />
 
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
+            android:icon="@drawable/pref_ic_prefer_ipv6"
             android:key="pref_prefer_ipv6"
             android:summary="@string/summary_pref_prefer_ipv6"
             android:title="@string/title_pref_prefer_ipv6" />
 
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
+            android:icon="@drawable/pref_ic_local_dns_enabled"
             android:key="pref_local_dns_enabled"
             android:summary="@string/summary_pref_local_dns_enabled"
             android:title="@string/title_pref_local_dns_enabled" />
 
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
+            android:icon="@drawable/pref_ic_fake_dns_enabled"
             android:key="pref_fake_dns_enabled"
             android:summary="@string/summary_pref_fake_dns_enabled"
             android:title="@string/title_pref_fake_dns_enabled" />
 
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
+            android:icon="@drawable/pref_ic_append_http_proxy"
             android:key="pref_append_http_proxy"
             android:summary="@string/summary_pref_append_http_proxy"
             android:title="@string/title_pref_append_http_proxy" />
 
         <EditTextPreference
+            android:icon="@drawable/pref_ic_vpn_dns"
             android:key="pref_vpn_dns"
             android:summary="@string/summary_pref_remote_dns"
             android:title="@string/title_pref_vpn_dns" />
@@ -91,6 +104,7 @@
             android:defaultValue="1"
             android:entries="@array/vpn_bypass_lan"
             android:entryValues="@array/vpn_bypass_lan_value"
+            android:icon="@drawable/pref_ic_vpn_bypass_lan"
             android:key="pref_vpn_bypass_lan"
             android:summary="%s"
             android:title="@string/title_pref_vpn_bypass_lan" />
@@ -99,12 +113,14 @@
             android:defaultValue="0"
             android:entries="@array/vpn_interface_address"
             android:entryValues="@array/vpn_interface_address_value"
+            android:icon="@drawable/pref_ic_vpn_interface_address_config_index"
             android:key="pref_vpn_interface_address_config_index"
             android:summary="%s"
             android:title="@string/title_pref_vpn_interface_address" />
 
         <EditTextPreference
             android:inputType="number"
+            android:icon="@drawable/pref_ic_vpn_mtu"
             android:key="pref_vpn_mtu"
             android:summary="1500"
             android:title="@string/title_pref_vpn_mtu" />
@@ -112,6 +128,7 @@
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
             android:defaultValue="true"
+            android:icon="@drawable/pref_ic_use_hev_tunnel_v2"
             android:key="pref_use_hev_tunnel_v2"
             android:summary="@string/summary_pref_use_hev_tunnel"
             android:title="@string/title_pref_use_hev_tunnel" />
@@ -120,11 +137,13 @@
             android:defaultValue="warn"
             android:entries="@array/hev_tunnel_loglevel"
             android:entryValues="@array/hev_tunnel_loglevel"
+            android:icon="@drawable/pref_ic_hev_tunnel_loglevel"
             android:key="pref_hev_tunnel_loglevel"
             android:summary="%s"
             android:title="@string/title_pref_hev_tunnel_loglevel" />
 
         <EditTextPreference
+            android:icon="@drawable/pref_ic_hev_tunnel_rw_timeout_v2"
             android:key="pref_hev_tunnel_rw_timeout_v2"
             android:summary="300,60"
             android:title="@string/title_pref_hev_tunnel_rw_timeout" />
@@ -135,6 +154,7 @@
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
             android:defaultValue="true"
+            android:icon="@drawable/pref_ic_sniffing_enabled"
             android:key="pref_sniffing_enabled"
             android:summary="@string/summary_pref_sniffing_enabled"
             android:title="@string/title_pref_sniffing_enabled" />
@@ -142,66 +162,73 @@
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
             android:defaultValue="false"
+            android:icon="@drawable/pref_ic_route_only_enabled"
             android:key="pref_route_only_enabled"
             android:summary="@string/summary_pref_route_only_enabled"
             android:title="@string/title_pref_route_only_enabled" />
 
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
-            android:defaultValue="true"
+            android:icon="@drawable/pref_ic_enable_local_proxy"
             android:key="pref_enable_local_proxy"
             android:summary="@string/summary_pref_enable_local_proxy"
             android:title="@string/title_pref_enable_local_proxy" />
 
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
-            android:defaultValue="false"
+            android:icon="@drawable/pref_ic_proxy_sharing_enabled"
             android:key="pref_proxy_sharing_enabled"
             android:summary="@string/summary_pref_proxy_sharing_enabled"
             android:title="@string/title_pref_proxy_sharing_enabled" />
 
         <EditTextPreference
             android:inputType="number"
+            android:icon="@drawable/pref_ic_socks_port"
             android:key="pref_socks_port"
-            android:summary="10808"
+            android:summary="@string/summary_pref_socks_port"
             android:title="@string/title_pref_socks_port" />
 
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
-            android:defaultValue="false"
+            android:icon="@drawable/pref_ic_dynamic_socks_port"
             android:key="pref_dynamic_socks_port"
             android:summary="@string/summary_pref_dynamic_socks_port"
             android:title="@string/title_pref_dynamic_socks_port" />
 
         <EditTextPreference
+            android:icon="@drawable/pref_ic_socks_username"
             android:key="pref_socks_username"
             android:summary="@string/summary_pref_socks_username"
             android:title="@string/title_pref_socks_username" />
 
         <EditTextPreference
             android:inputType="textPassword"
+            android:icon="@drawable/pref_ic_socks_password"
             android:key="pref_socks_password"
             android:summary="@string/summary_pref_socks_password"
             android:title="@string/title_pref_socks_password" />
 
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
-            android:defaultValue="true"
+            android:icon="@drawable/pref_ic_socks_enable_udp"
             android:key="pref_socks_enable_udp"
             android:summary="@string/summary_pref_socks_enable_udp"
             android:title="@string/title_pref_socks_enable_udp" />
 
         <EditTextPreference
+            android:icon="@drawable/pref_ic_remote_dns"
             android:key="pref_remote_dns"
             android:summary="@string/summary_pref_remote_dns"
             android:title="@string/title_pref_remote_dns" />
 
         <EditTextPreference
+            android:icon="@drawable/pref_ic_domestic_dns"
             android:key="pref_domestic_dns"
             android:summary="@string/summary_pref_domestic_dns"
             android:title="@string/title_pref_domestic_dns" />
 
         <EditTextPreference
+            android:icon="@drawable/pref_ic_dns_hosts"
             android:key="pref_dns_hosts"
             android:summary="@string/summary_pref_dns_hosts"
             android:title="@string/title_pref_dns_hosts" />
@@ -210,6 +237,7 @@
             android:defaultValue="warning"
             android:entries="@array/core_loglevel"
             android:entryValues="@array/core_loglevel"
+            android:icon="@drawable/pref_ic_core_loglevel"
             android:key="pref_core_loglevel"
             android:summary="%s"
             android:title="@string/title_core_loglevel" />
@@ -218,6 +246,7 @@
             android:defaultValue="1"
             android:entries="@array/outbound_domain_resolve_method"
             android:entryValues="@array/outbound_domain_resolve_method_value"
+            android:icon="@drawable/pref_ic_outbound_domain_resolve_method"
             android:key="pref_outbound_domain_resolve_method"
             android:summary="%s"
             android:title="@string/title_outbound_domain_resolve_method" />
@@ -229,18 +258,21 @@
         app:initialExpandedChildrenCount="0">
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
+            android:icon="@drawable/pref_ic_mux_enabled"
             android:key="pref_mux_enabled"
             android:summary="@string/summary_pref_mux_enabled"
             android:title="@string/title_pref_mux_enabled" />
 
         <EditTextPreference
             android:inputType="number"
+            android:icon="@drawable/pref_ic_mux_concurrency"
             android:key="pref_mux_concurrency"
             android:summary="8"
             android:title="@string/title_pref_mux_concurency" />
 
         <EditTextPreference
             android:inputType="number"
+            android:icon="@drawable/pref_ic_mux_xudp_concurrency"
             android:key="pref_mux_xudp_concurrency"
             android:summary="8"
             android:title="@string/title_pref_mux_xudp_concurency" />
@@ -249,6 +281,7 @@
             android:defaultValue="reject"
             android:entries="@array/mux_xudp_quic_entries"
             android:entryValues="@array/mux_xudp_quic_value"
+            android:icon="@drawable/pref_ic_mux_xudp_quic"
             android:key="pref_mux_xudp_quic"
             android:summary="%s"
             android:title="@string/title_pref_mux_xudp_quic" />
@@ -259,20 +292,24 @@
         app:initialExpandedChildrenCount="0">
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
+            android:icon="@drawable/pref_ic_fragment_enabled"
             android:key="pref_fragment_enabled"
             android:title="@string/title_pref_fragment_enabled" />
 
         <EditTextPreference
+            android:icon="@drawable/pref_ic_fragment_length"
             android:key="pref_fragment_length"
             android:summary="50-100"
             android:title="@string/title_pref_fragment_length" />
 
         <EditTextPreference
+            android:icon="@drawable/pref_ic_fragment_interval"
             android:key="pref_fragment_interval"
             android:summary="10-20"
             android:title="@string/title_pref_fragment_interval" />
 
         <EditTextPreference
+            android:icon="@drawable/pref_ic_fragment_maxsplit"
             android:key="pref_fragment_maxsplit"
             android:summary="10"
             android:title="@string/title_pref_fragment_maxsplit" />
@@ -281,6 +318,7 @@
             android:defaultValue="tlshello"
             android:entries="@array/fragment_packets"
             android:entryValues="@array/fragment_packets"
+            android:icon="@drawable/pref_ic_fragment_packets"
             android:key="pref_fragment_packets"
             android:summary="%s"
             android:title="@string/title_pref_fragment_packets" />
@@ -290,12 +328,14 @@
 
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
+            android:icon="@drawable/pref_ic_is_booted"
             android:key="pref_is_booted"
             android:summary="@string/summary_pref_is_booted"
             android:title="@string/title_pref_is_booted" />
 
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
+            android:icon="@drawable/pref_ic_auto_remove_invalid_after_test"
             android:key="pref_auto_remove_invalid_after_test"
             android:defaultValue="false"
             android:summary="@string/summary_pref_auto_remove_invalid_after_test"
@@ -303,23 +343,27 @@
 
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
+            android:icon="@drawable/pref_ic_auto_sort_after_test"
             android:key="pref_auto_sort_after_test"
             android:defaultValue="false"
             android:summary="@string/summary_pref_auto_sort_after_test"
             android:title="@string/title_pref_auto_sort_after_test" />
 
         <EditTextPreference
+            android:icon="@drawable/pref_ic_delay_test_url"
             android:key="pref_delay_test_url"
             android:summary="@string/summary_pref_delay_test_url"
             android:title="@string/title_pref_delay_test_url" />
 
         <EditTextPreference
             android:inputType="number"
+            android:icon="@drawable/pref_ic_real_ping_concurrency"
             android:key="pref_real_ping_concurrency"
             android:summary="16"
             android:title="@string/title_pref_real_ping_concurrency" />
 
         <EditTextPreference
+            android:icon="@drawable/pref_ic_ip_api_url"
             android:key="pref_ip_api_url"
             android:summary="@string/summary_pref_ip_api_url"
             android:title="@string/title_pref_ip_api_url" />
@@ -332,6 +376,7 @@
             android:defaultValue="VPN"
             android:entries="@array/mode_entries"
             android:entryValues="@array/mode_value"
+            android:icon="@drawable/pref_ic_mode"
             android:key="pref_mode"
             android:summary="%s"
             android:title="@string/title_mode" />
@@ -339,6 +384,7 @@
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
             android:defaultValue="false"
+            android:icon="@drawable/pref_ic_root_mode_enabled"
             android:key="pref_root_mode_enabled"
             android:summary="@string/summary_root_mode_enabled"
             android:title="@string/title_root_mode_enabled" />
@@ -346,6 +392,7 @@
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
             android:defaultValue="false"
+            android:icon="@drawable/pref_ic_root_lan_sharing"
             android:key="pref_root_lan_sharing"
             android:summary="@string/summary_root_lan_sharing"
             android:title="@string/title_root_lan_sharing" />
@@ -355,11 +402,13 @@
 
     <PreferenceCategory android:title="Panel Integration">
         <EditTextPreference
+            android:icon="@drawable/pref_ic_panel_url"
             android:key="pref_panel_url"
             android:summary="Enter your panel URL (e.g., https://your-panel.workers.dev)"
             android:title="Panel URL" />
 
         <EditTextPreference
+            android:icon="@drawable/pref_ic_panel_api_key"
             android:key="pref_panel_api_key"
             android:inputType="textPassword"
             android:summary="Enter your API key from the panel"
@@ -367,12 +416,14 @@
 
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
+            android:icon="@drawable/pref_ic_panel_check_update"
             android:key="pref_panel_check_update"
             android:summary="Check for app updates from the panel"
             android:title="Check Updates from Panel" />
 
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"
+            android:icon="@drawable/pref_ic_panel_report_connection"
             android:key="pref_panel_report_connection"
             android:summary="Report connection info to the panel"
             android:title="Report Connections" />

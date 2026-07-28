@@ -19,6 +19,7 @@
     <color name="home_text_primary">#F5F7F7</color>
     <color name="home_text_secondary">#9AA3A6</color>
     <color name="home_warning">#F9A73C</color>
+    <color name="toast_success_bg">#1F2E2B</color>
     <color name="home_danger">#FF5C7A</color>
     <color name="home_toast_success">#1B4A45</color>
 

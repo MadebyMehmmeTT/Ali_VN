@@ -54,6 +54,8 @@ class AngApplication : MultiDexApplication() {
         try {
             es.dmoral.toasty.Toasty.Config.getInstance()
                 .setGravity(android.view.Gravity.BOTTOM, 0, 300)
+                .setSuccessColor(androidx.core.content.ContextCompat.getColor(this, com.v2ray.ang.R.color.toast_success_bg))
+                .setTextColor(androidx.core.content.ContextCompat.getColor(this, com.v2ray.ang.R.color.home_text_primary))
                 .apply()
         } catch (e: Exception) {
             Log.e(TAG, "Toasty config failed", e)
