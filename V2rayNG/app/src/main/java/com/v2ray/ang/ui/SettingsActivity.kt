@@ -79,6 +79,11 @@ class SettingsActivity : BaseActivity() {
             addPreferencesFromResource(R.xml.pref_settings)
 
             initPreferenceSummaries()
+            findPreference<androidx.preference.ListPreference>(AppConfig.PREF_LANGUAGE)?.setOnPreferenceChangeListener { _, _ ->
+                com.v2ray.ang.handler.SettingsChangeManager.makeRecreateForLanguage()
+                requireActivity().recreate()
+                true
+            }
 
             localDns?.setOnPreferenceChangeListener { _, any ->
                 updateLocalDns(any as Boolean)

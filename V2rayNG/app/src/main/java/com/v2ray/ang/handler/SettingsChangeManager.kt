@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 object SettingsChangeManager {
     private val _restartService = MutableStateFlow(false)
     private val _setupGroupTab = MutableStateFlow(false)
+    private val _recreateForLanguage = MutableStateFlow(false)
 
     fun makeRestartService() {
         _restartService.value = true
@@ -18,6 +19,16 @@ object SettingsChangeManager {
 
     fun makeSetupGroupTab() {
         _setupGroupTab.value = true
+    }
+
+    fun makeRecreateForLanguage() {
+        _recreateForLanguage.value = true
+    }
+
+    fun consumeRecreateForLanguage(): Boolean {
+        val v = _recreateForLanguage.value
+        _recreateForLanguage.value = false
+        return v
     }
 
     fun consumeSetupGroupTab(): Boolean {

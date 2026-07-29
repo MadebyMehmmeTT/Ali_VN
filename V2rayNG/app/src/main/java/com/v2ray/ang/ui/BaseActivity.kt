@@ -17,6 +17,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.v2ray.ang.R
 import com.v2ray.ang.handler.SettingsManager
+import com.v2ray.ang.handler.SettingsChangeManager
 import com.v2ray.ang.helper.CustomDividerItemDecoration
 import com.v2ray.ang.util.MyContextWrapper
 import com.v2ray.ang.util.Utils
@@ -53,6 +54,13 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     
+    override fun onResume() {
+        super.onResume()
+        if (SettingsChangeManager.consumeRecreateForLanguage()) {
+            recreate()
+        }
+    }
+
     protected fun addCustomDividerToRecyclerView(recyclerView: RecyclerView, context: Context?, drawableResId: Int, orientation: Int = DividerItemDecoration.VERTICAL) {
 
         val drawable = ContextCompat.getDrawable(context!!, drawableResId)
