@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">HAMED VPN</string>
-    <string name="bottom_nav_home" translatable="false">Home</string>
-    <string name="bottom_nav_servers" translatable="false">Servers</string>
-    <string name="bottom_nav_subs" translatable="false">Subs</string>
-    <string name="bottom_nav_assets" translatable="false">Assets</string>
-    <string name="bottom_nav_settings" translatable="false">Settings</string>
+    <string name="bottom_nav_home">Home</string>
+    <string name="bottom_nav_servers">Servers</string>
+    <string name="bottom_nav_subs">Subs</string>
+    <string name="bottom_nav_assets">Assets</string>
+    <string name="bottom_nav_settings">Settings</string>
 
     
     <string name="home_connect">Connect</string>

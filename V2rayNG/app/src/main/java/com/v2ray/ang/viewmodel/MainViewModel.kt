@@ -58,7 +58,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     
     fun startListenBroadcast() {
-        isRunning.value = false
+        isRunning.value = com.v2ray.ang.core.CoreServiceManager.isRunning()
         val mFilter = IntentFilter(AppConfig.BROADCAST_ACTION_ACTIVITY)
         ContextCompat.registerReceiver(getApplication(), mMsgReceiver, mFilter, Utils.receiverFlags())
         MessageUtil.sendMsg2Service(getApplication(), AppConfig.MSG_REGISTER_CLIENT, "")

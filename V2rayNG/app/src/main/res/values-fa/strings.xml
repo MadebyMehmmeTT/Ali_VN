@@ -505,4 +505,9 @@
     <string name="summary_root_lan_sharing">هدایت هات‌اسپات وای‌فای و دستگاه‌های متصل با تترینگ USB از طریق VPN</string>
     <string name="routing_settings_process">پردازش (نام پکیج — فقط با Xray TUN، فعال بودن routeOnly و اندروید ۱۰+)</string>
     <string name="maintenance_mode_message">سرویس در حال حاضر در حال تعمیر است. لطفاً بعداً دوباره امتحان کنید.</string>
+    <string name="bottom_nav_home">خانه</string>
+    <string name="bottom_nav_servers">سرورها</string>
+    <string name="bottom_nav_subs">اشتراک‌ها</string>
+    <string name="bottom_nav_assets">فایل‌ها</string>
+    <string name="bottom_nav_settings">تنظیمات</string>
 </resources>
