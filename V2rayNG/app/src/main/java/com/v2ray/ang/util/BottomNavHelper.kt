@@ -44,7 +44,14 @@ object BottomNavHelper {
     }
 
     fun createSwipeDetector(activity: Activity, currentId: Int): GestureDetector {
-        return SwipeGestureHelper.create(activity, onSwipeLeft = { navigateRelative(activity, currentId, 1) }, onSwipeRight = { navigateRelative(activity, currentId, -1) })
+        val isRtl = activity.resources.configuration.layoutDirection == android.view.View.LAYOUT_DIRECTION_RTL
+        val leftDir = if (isRtl) -1 else 1
+        val rightDir = if (isRtl) 1 else -1
+        return SwipeGestureHelper.create(
+            activity,
+            onSwipeLeft = { navigateRelative(activity, currentId, leftDir) },
+            onSwipeRight = { navigateRelative(activity, currentId, rightDir) }
+        )
     }
 
     private fun navigateRelative(activity: Activity, currentId: Int, dir: Int) {
