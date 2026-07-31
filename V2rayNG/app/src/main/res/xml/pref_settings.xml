@@ -325,6 +325,9 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/title_advanced">
+        <Preference
+            android:key="pref_open_logcat"
+            android:title="@string/title_logcat" />
 
         <SwitchPreferenceCompat
             style="@style/ModernSwitchPreference"

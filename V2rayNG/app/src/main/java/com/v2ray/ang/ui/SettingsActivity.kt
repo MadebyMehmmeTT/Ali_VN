@@ -85,6 +85,11 @@ class SettingsActivity : BaseActivity() {
                 true
             }
 
+            findPreference<androidx.preference.Preference>("pref_open_logcat")?.setOnPreferenceClickListener {
+                startActivity(android.content.Intent(requireContext(), com.v2ray.ang.ui.LogcatActivity::class.java))
+                true
+            }
+
             localDns?.setOnPreferenceChangeListener { _, any ->
                 updateLocalDns(any as Boolean)
                 true
