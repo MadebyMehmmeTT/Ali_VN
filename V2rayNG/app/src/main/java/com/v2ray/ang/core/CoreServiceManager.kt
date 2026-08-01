@@ -182,7 +182,7 @@ object CoreServiceManager {
     fun startCoreLoop(vpnInterface: ParcelFileDescriptor?): Boolean {
         if (coreController.isRunning) {
             LogUtil.w(AppConfig.TAG, "StartCore-Manager: Core already running")
-            return false
+            return true
         }
 
         val service = getService()
