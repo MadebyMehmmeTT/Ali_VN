@@ -46,6 +46,7 @@ object CoreServiceManager {
     private val coreController: CoreController = CoreNativeManager.newCoreController(CoreCallback())
     private val mMsgReceive = ReceiveMessageHandler()
     private var currentConfig: ProfileItem? = null
+    private var currentGuid: String? = null
     private var processFinder: XrayProcessFinder? = null
     private var browserDialer: IDialerService? = null
 
@@ -180,9 +181,18 @@ object CoreServiceManager {
 
     
     fun startCoreLoop(vpnInterface: ParcelFileDescriptor?): Boolean {
+        val requestedGuid = MmkvManager.getSelectServer()
         if (coreController.isRunning) {
-            LogUtil.w(AppConfig.TAG, "StartCore-Manager: Core already running")
-            return true
+            if (requestedGuid != null && requestedGuid == currentGuid) {
+                LogUtil.w(AppConfig.TAG, "StartCore-Manager: Core already running (same server)")
+                return true
+            }
+            LogUtil.w(AppConfig.TAG, "StartCore-Manager: Switching server, stopping old core first")
+            try {
+                coreController.stopLoop()
+            } catch (e: Exception) {
+                LogUtil.e(AppConfig.TAG, "StartCore-Manager: Failed to stop old core for switch", e)
+            }
         }
 
         val service = getService()
@@ -222,6 +232,7 @@ object CoreServiceManager {
         ContextCompat.registerReceiver(service, mMsgReceive, mFilter, Utils.receiverFlags())
 
         currentConfig = config
+        currentGuid = guid
         var tunFd = vpnInterface?.fd ?: 0
         val dialerAddr = if (currentConfig?.browserDialerMode.isNullOrEmpty()) {
             ""
@@ -278,6 +289,7 @@ object CoreServiceManager {
         }
 
         MessageUtil.sendMsg2UI(service, AppConfig.MSG_STATE_STOP_SUCCESS, "")
+        currentGuid = null
         NotificationManager.cancelNotification()
 
         try {
