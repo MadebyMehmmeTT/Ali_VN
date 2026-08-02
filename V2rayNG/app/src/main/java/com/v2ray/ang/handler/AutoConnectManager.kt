@@ -8,7 +8,7 @@ import com.v2ray.ang.util.LogUtil
 
 object AutoConnectManager {
 
-    fun ensureSubscription(): String {
+    fun ensureSubscription(fetchFresh: Boolean = true): String {
         var panelUrl = MmkvManager.decodeSettingsString(AppConfig.PREF_PANEL_URL)
         var panelApiKey = MmkvManager.decodeSettingsString(AppConfig.PREF_PANEL_API_KEY)
 
@@ -51,6 +51,7 @@ object AutoConnectManager {
             updatedSubs.lastOrNull()?.guid ?: return ""
         }
 
+        if (fetchFresh) {
         // Always fetch fresh configs from panel
         try {
             val subItem = MmkvManager.decodeSubscription(guid) ?: return guid
@@ -60,6 +61,7 @@ object AutoConnectManager {
             LogUtil.e(AppConfig.TAG, "AutoConnectManager: Failed to fetch from panel", e)
         }
 
+        }
         return guid
     }
 

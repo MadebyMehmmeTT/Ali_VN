@@ -154,7 +154,7 @@ class ServerListActivity : BaseActivity() {
         val selected = MmkvManager.getSelectServer()
         val listItems = mutableListOf<ListItem>()
 
-        val panelSubId = AutoConnectManager.ensureSubscription()
+        val panelSubId = AutoConnectManager.ensureSubscription(fetchFresh = false)
         val panelRows = buildRows(panelSubId, selected)
         if (panelRows.isNotEmpty()) {
             listItems.add(ListItem.Header(getString(R.string.server_list_default_section), panelSubId))
