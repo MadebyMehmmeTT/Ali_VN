@@ -105,7 +105,6 @@ object CoreServiceManager {
     
     fun getRunningServerName() = currentConfig?.remarks.orEmpty()
     fun getRunningGuid(): String? = currentGuid
-    fun getRunningGuid(): String? = currentGuid
 
     
     @Throws(Exception::class)
