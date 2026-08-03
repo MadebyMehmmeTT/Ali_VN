@@ -100,7 +100,23 @@ class MainActivity : HelperBaseActivity() {
         checkAndRequestPermission(PermissionType.POST_NOTIFICATIONS) {}
         checkMaintenanceMode()
     }
-    override fun onResume() { super.onResume(); binding.bottomNav.root.selectedItemId = R.id.nav_home; mainViewModel.syncRunningState(); binding.root.postDelayed({ mainViewModel.syncRunningState() }, 800) }
+    override fun onResume() {
+        super.onResume()
+        binding.bottomNav.root.selectedItemId = R.id.nav_home
+        val selectedGuid = MmkvManager.getSelectServer()
+        val runningGuid = com.v2ray.ang.core.CoreServiceManager.getRunningGuid()
+        if (!selectedGuid.isNullOrEmpty() && selectedGuid != runningGuid) {
+            mainViewModel.connectToServer(selectedGuid)
+            if (mainViewModel.isRunning.value == true) {
+                restartV2Ray()
+            } else {
+                startV2RayWithPermissionCheck()
+            }
+        } else {
+            mainViewModel.syncRunningState()
+        }
+        binding.root.postDelayed({ mainViewModel.syncRunningState() }, 800)
+    }
 
     
 

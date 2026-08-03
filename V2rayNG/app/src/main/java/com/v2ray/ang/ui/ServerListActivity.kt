@@ -31,6 +31,7 @@ class ServerListActivity : BaseActivity() {
     private val binding by lazy { ActivityServerListBinding.inflate(layoutInflater) }
     private val adapter = ResultAdapter(
         onClick = { guid ->
+            MmkvManager.setSelectServer(guid)
             setResult(RESULT_OK, Intent().putExtra(EXTRA_SELECTED_GUID, guid))
             finish()
         },
