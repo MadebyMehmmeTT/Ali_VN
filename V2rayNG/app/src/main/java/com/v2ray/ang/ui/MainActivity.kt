@@ -105,7 +105,7 @@ class MainActivity : HelperBaseActivity() {
         binding.bottomNav.root.selectedItemId = R.id.nav_home
         val selectedGuid = MmkvManager.getSelectServer()
         val runningGuid = com.v2ray.ang.core.CoreServiceManager.getRunningGuid()
-        if (!selectedGuid.isNullOrEmpty() && selectedGuid != runningGuid) {
+        if (!selectedGuid.isNullOrEmpty() && selectedGuid != runningGuid && mainViewModel.autoConnectState.value !is com.v2ray.ang.dto.AutoConnectState.Connecting) {
             mainViewModel.connectToServer(selectedGuid)
             if (mainViewModel.isRunning.value == true) {
                 restartV2Ray()
