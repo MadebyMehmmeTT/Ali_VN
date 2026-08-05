@@ -32,6 +32,14 @@ class ServerListActivity : BaseActivity() {
     private val adapter = ResultAdapter(
         onClick = { guid ->
             MmkvManager.setSelectServer(guid)
+            if (com.v2ray.ang.core.CoreServiceManager.isRunning()) {
+                com.v2ray.ang.core.CoreServiceManager.stopVService(this)
+                android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+                    com.v2ray.ang.core.CoreServiceManager.startVService(this)
+                }, 500)
+            } else {
+                com.v2ray.ang.core.CoreServiceManager.startVService(this)
+            }
             setResult(RESULT_OK, Intent().putExtra(EXTRA_SELECTED_GUID, guid))
             finish()
         },
