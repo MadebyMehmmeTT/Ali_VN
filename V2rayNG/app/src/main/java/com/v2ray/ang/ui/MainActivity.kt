@@ -103,8 +103,6 @@ class MainActivity : HelperBaseActivity() {
     override fun onResume() {
         super.onResume()
         binding.bottomNav.root.selectedItemId = R.id.nav_home
-        mainViewModel.syncRunningState()
-        binding.root.postDelayed({ mainViewModel.syncRunningState() }, 800)
     }
 
     
